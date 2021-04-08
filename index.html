@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
     <head>
     <title>SETTINGS</title>
     <meta charset="utf-8"/>
+    <link rel="stylesheet" href="sheet.css">
     <style type="text/css">
 
     </style>
@@ -10,9 +11,13 @@
     </head>
 
     <body>
+        <header>
         <h1>SETTINGS</h1>
-        <hr>
+    </header>
+    <br>
+        
         <form action="#">
+            <section id="plyrsttings">
             <fieldset>
             <legend>Player Settings</legend>
                 <div id = "Player">
@@ -23,42 +28,50 @@
                     <input id="hand" type="number" name="hand" value = "1" min = "1" step = 1""><br>
                 </div>
             </fieldset>
+        </section>
             <br>
+            <section id ="gmesttings">
             <fieldset>
             <legend>Game Settings</legend>
                 <div id = "Game">
                     <label for = "name"> Game Name:</label>
                     <input id = "name" type = "text" name = "name"> <br>
-                        <div id = "Pile">
-                            <label for="pilenum">Number of Piles:</label>
-                            <input id="pilenum" type="number" name="pilenum" value = "0" min = "0" step = 1""><br>
 
-                            <!-- append text inputs here if $('#pilenum').val() > 0-->
-                        </div>
-                    <label for = "autocard"> Auto Card </label>
-                    <input type = "checkbox" id = "autocard" name = "autocard">
+                    <label for="pilenum">Number of Piles:</label>
+                    <input id="pilenum" type="number" name="pilenum" value = "0" min = "0" step = 1""><br>
+
+                    <!-- append text inputs here if $('#pilenum').val() > 0-->
                 </div>
             </fieldset>
-
+            <br>
+        </section>
+<section id="submit">
             <br>
             <input type="reset" name="reset" value="Reset">
             <input type="button" value="Create Game" onclick="SetGame()">
-
+        </section>
         </form>
-
+    
         <script>
             function SetGame(){
               console.log("Game Created");
             }
 
             function success(data) {
-              console.log("sucess");
+                if (data.type == 0)
+                {
+                    //////////////////////
+                }
+                else
+                {
+                  ///////////////////////
+                }
             }
 
             $(document).ready(function(){
                 console.log("ready");
-                // post request here sending in the num players, the starting hand, game name, Pile num and name(s), and if autocard is checked or not
             });
         </script>
     </body>
 </html>
+
