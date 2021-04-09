@@ -1,15 +1,28 @@
 let express = require('express');
 let path = require("path");
 let app = express();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(express.static("./public"));
+
 let playerCount = 0;
+let playerSetNum = 1; // set this to the player num when game is created
 
 app.get("/",function(req,res) {
     res.sendFile(path.resolve(__dirname,"index.html"));
 });
 app.get("/player",function(req,res) {
-    res.sendFile(path.resolve(__dirname,"player.html"));
+    if(playerCount >= playerSetNum){
+        res.end("Error! Player Count Exceeded");}
+    else{
+        console.log(path.resolve(__dirname,"player.html"));
+        res.sendFile(path.resolve(__dirname,"player.html"));
+        playerCount += 1;
+    }
 });
-
 
 // app.get("/typeCheck", function(req, res){
 //     console.log("server typeCheck = " + calcType);
@@ -58,6 +71,6 @@ app.get("/player",function(req,res) {
 //         }
 //     }
 // });
-app.listen(3000,function() {
-    console.log("started on port 3000");
+app.listen(4005,function(){
+    console.log("started on port 4005");
 });

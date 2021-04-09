@@ -1,0 +1,56 @@
+body{
+    background: url(pkbg.png);
+    font-family: 'Courier New', Courier, monospace;
+    font-style: italic;
+    font-variant: small-caps;
+}
+header.h3{
+    background-image: url(nihon.gif)repeat;
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+header {
+    background-image:url(tokyoo.gif);
+    font: 10px;
+    border-style: outset;
+    border-color:#793185;
+    border-width: 5px;
+    display: block;
+    font-size: 2em;
+    margin-right: 100px;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+   
+}
+div {
+    display: block;
+    
+}
+label{
+    border-bottom: double 2px cornflowerblue;
+}
+section{
+    border:#793185 5px outset;
+
+    float: left; 
+   
+    background-image:url(tokyoo.gif);
+    display: block; 
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+        
+    
+}
+section#carrddeck{
+    border:#793185 5px outset;
+    background-image:url(nihon.gif);
+    color:white;
+}

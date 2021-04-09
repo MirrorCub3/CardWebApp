@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
     <title>SETTINGS</title>
@@ -15,22 +15,22 @@
         <h1>SETTINGS</h1>
     </header>
     <br>
-        
+
         <form action="#">
-            <section id="plyrsttings">
+            <section id="playersettings">
             <fieldset>
             <legend>Player Settings</legend>
                 <div id = "Player">
                     <label for="playernum">Number of Players:</label>
-                    <input id="playernum" type="number" name="playernum" value = "1" min = "1" step = 1""><br>
+                    <input id="playernum" type="number" name="playernum" min = "1" step = 1""><br>
 
                     <label for="hand">Starting Hand:</label>
-                    <input id="hand" type="number" name="hand" value = "1" min = "1" step = 1""><br>
+                    <input id="hand" type="number" name="hand" min = "1" step = 1""><br>
                 </div>
             </fieldset>
         </section>
             <br>
-            <section id ="gmesttings">
+            <section id ="gamesettings">
             <fieldset>
             <legend>Game Settings</legend>
                 <div id = "Game">
@@ -38,20 +38,20 @@
                     <input id = "name" type = "text" name = "name"> <br>
 
                     <label for="pilenum">Number of Piles:</label>
-                    <input id="pilenum" type="number" name="pilenum" value = "0" min = "0" step = 1""><br>
+                    <input id="pilenum" type="number" name="pilenum" min = "0" step = 1""><br>
 
                     <!-- append text inputs here if $('#pilenum').val() > 0-->
                 </div>
             </fieldset>
             <br>
         </section>
-<section id="submit">
+        <section id="submit">
             <br>
             <input type="reset" name="reset" value="Reset">
             <input type="button" value="Create Game" onclick="SetGame()">
         </section>
         </form>
-    
+
         <script>
             function SetGame(){
               console.log("Game Created");
@@ -74,4 +74,3 @@
         </script>
     </body>
 </html>
-
