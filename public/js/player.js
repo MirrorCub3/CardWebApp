@@ -1,8 +1,6 @@
 // client js
-function sendClicked(){
-  console.log("sent");
+function SendMessage(){
+let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value )
+document.getElementById("chatbox").innerHTML +=  chat + "\n"
+document.getElementById("sendMessage").value = ""
 }
-
-$(document).ready(function(){
-  $("#sendbutton").click(sendClicked);
-});

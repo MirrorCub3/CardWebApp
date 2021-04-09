@@ -10,7 +10,7 @@ app.use(express.static("./public"));
 
  // settings variables
 let playerCount = 0;
-let playerSetNum = 1; // set this to the player num when game is created
+let playerSetNum = 0; // set this to the player num when game is created
 let handNum = 1;
 
 let gameName = "Virtual Cards";
