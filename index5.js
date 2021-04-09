@@ -8,22 +8,32 @@ app.use(bodyParser.json());
 
 app.use(express.static("./public"));
 
+ // settings variables
 let playerCount = 0;
 let playerSetNum = 1; // set this to the player num when game is created
+let handNum = 1;
+
+let gameName = "Virtual Cards";
 
 app.get("/",function(req,res) {
-    res.sendFile(path.resolve(__dirname,"index.html"));
+    res.sendFile(__dirname + "/public/views/index.html");
 });
 app.get("/player",function(req,res) {
     if(playerCount >= playerSetNum){
         res.end("Error! Player Count Exceeded");}
     else{
-        console.log(path.resolve(__dirname,"player.html"));
-        res.sendFile(path.resolve(__dirname,"player.html"));
+        res.sendFile(__dirname + "/public/views/player.html");
         playerCount += 1;
     }
 });
+app.post("/create",function(req,res) {
+  playerCount = 0;
+  playerSetNum = req.body.playernum;
+  handNum = req.body.handnum;
 
+  gameName = req.body.name;
+  res.json(null);
+});
 // app.get("/typeCheck", function(req, res){
 //     console.log("server typeCheck = " + calcType);
 //

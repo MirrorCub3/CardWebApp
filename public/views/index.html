@@ -13,7 +13,7 @@
     <body>
         <header>
         <h1>SETTINGS</h1>
-    </header>
+        </header>
     <br>
 
         <form action="#">
@@ -28,7 +28,7 @@
                     <input id="hand" type="number" name="hand" min = "1" step = 1""><br>
                 </div>
             </fieldset>
-        </section>
+            </section>
             <br>
             <section id ="gamesettings">
             <fieldset>
@@ -37,10 +37,13 @@
                     <label for = "name"> Game Name:</label>
                     <input id = "name" type = "text" name = "name"> <br>
 
-                    <label for="pilenum">Number of Piles:</label>
-                    <input id="pilenum" type="number" name="pilenum" min = "0" step = 1""><br>
-
-                    <!-- append text inputs here if $('#pilenum').val() > 0-->
+                    <div id = "Pile">
+                        <label for="pilenum">Number of Piles:</label>
+                        <input id="pilenum" type="number" name="pilenum" min = "0" step = "1"/>
+                        <input id="makePile" type="button" value="Make Piles" />
+                        <br>
+                        <!-- append text inputs here if $('#pilenum').val() > 0-->
+                    </div>
                 </div>
             </fieldset>
             <br>
@@ -48,13 +51,22 @@
         <section id="submit">
             <br>
             <input type="reset" name="reset" value="Reset">
-            <input type="button" value="Create Game" onclick="SetGame()">
+            <input id = "CreateGameButton" type="button" value="Create Game">
         </section>
         </form>
 
         <script>
+            let i = 0;
             function SetGame(){
-              console.log("Game Created");
+                console.log("Game Created");
+                $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val()},null);
+            }
+            function CreatePile(){
+                console.log($("#pilenum").val());
+                // for(i = 0, i < $("#pilenum").val(), i++){
+                //     $("#Pile").appendChild(' <br> <label for="pile" + i >Number of Piles:</label><input type = "text" id = "pile" + i > ');
+                // }
+                console.log("Piles Created");
             }
 
             function success(data) {
@@ -70,6 +82,8 @@
 
             $(document).ready(function(){
                 console.log("ready");
+                $("#CreateGameButton").click(SetGame);
+                $("#makePile").click(CreatePile);
             });
         </script>
     </body>
