@@ -13,6 +13,7 @@
     <body>
         <header>
         <h1>SETTINGS</h1>
+        <h3 id = "numPlayers">Active Players: 0 </h3>
         </header>
     <br>
 
@@ -52,14 +53,14 @@
             <br>
             <input type="reset" name="reset" value="Reset">
             <input id = "CreateGameButton" type="button" value="Create Game">
+            <!--<input id = "refreshButton" type="button" value="Refresh">-->
         </section>
         </form>
 
         <script>
-            let i = 0;
+            //let i = 0;
             function SetGame(){
-                console.log("Game Created");
-                $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val()},null);
+                $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val()},success);
             }
             function CreatePile(){
                 console.log($("#pilenum").val());
@@ -68,21 +69,27 @@
                 // }
                 console.log("Piles Created");
             }
-
             function success(data) {
-                if (data.type == 0)
-                {
-                    //////////////////////
+                if (data.error == 1){
+                  alert("Invalid Starting Hand");
                 }
-                else
-                {
-                  ///////////////////////
+                else{
+                  alert("Game Created!");
                 }
             }
-
+            check();
+            function check() {
+                $.get("/indexCheck", checkSuccess);
+                let numMilliSeconds = 1000;
+                setTimeout(check, numMilliSeconds);
+            }
+            function checkSuccess(data){
+                document.getElementById("numPlayers").innerHTML = "Active Players: " + data.active;
+            }
             $(document).ready(function(){
                 console.log("ready");
                 $("#CreateGameButton").click(SetGame);
+                //$("#refreshButton").click(SetGame);
                 $("#makePile").click(CreatePile);
             });
         </script>
