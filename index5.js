@@ -27,7 +27,8 @@ app.get("/",function(req,res) {
 });
 app.get("/player",function(req,res) {
     if(numActive >= playerSetNum){
-        res.end("Error! Player Count Exceeded");}
+        res.end("Error! Player Count Exceeded");
+    }
     else{
         res.sendFile(__dirname + "/public/views/player.html");
         numActive++;
@@ -36,6 +37,7 @@ app.get("/player",function(req,res) {
             if(playerList[i] == false && indexFound == false){
                 playerList[i] = true;
                 playerId = ++i;
+                console.log(playerId)
                 indexFound = true;
             }
         }
@@ -44,7 +46,6 @@ app.get("/player",function(req,res) {
 app.get("/player2",function(req,res) {
       let ident = req.query.id;
       if(req.query.index == 1){
-          ident = playerId;
           res.json({id:ident,gamename:gameName});
       }
 });
