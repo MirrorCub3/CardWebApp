@@ -18,14 +18,19 @@ let handNum = 1;
 let gameName = "Virtual Cards";
 let deckSize = 52;
 
+let newGame = false;
 let chat = [];
 
 app.get("/",function(req,res) {
+    newGame = false;
     numActive = 0;
     chat.length = 0;
     res.sendFile(__dirname + "/public/views/index.html");
 });
 app.get("/player",function(req,res) {
+    if(!newGame){
+        res.end(" 404 Game Not Found");
+    }
     if(numActive >= playerSetNum){
         res.end("Error! Player Count Exceeded");
     }
@@ -37,7 +42,6 @@ app.get("/player",function(req,res) {
             if(playerList[i] == false && indexFound == false){
                 playerList[i] = true;
                 playerId = ++i;
-                console.log(playerId)
                 indexFound = true;
             }
         }
@@ -46,6 +50,7 @@ app.get("/player",function(req,res) {
 app.get("/player2",function(req,res) {
       let ident = req.query.id;
       if(req.query.index == 1){
+          ident = playerId;
           res.json({id:ident,gamename:gameName});
       }
 });
@@ -75,6 +80,7 @@ app.post("/create",function(req,res) {
         res.json({error:1});
         return;
     }
+    newGame = true;
     playerSetNum = req.body.playernum;
 
     playerList.length = playerSetNum;
@@ -86,6 +92,25 @@ app.post("/create",function(req,res) {
     chat.length = 0;
     gameName = req.body.name;
     res.json({error:0});
+});
+app.post("/update",function(req,res) {
+    if(req.body.playernum * req.body.handnum > deckSize){
+        res.json({error:1});
+        return;
+    }
+    if(!newGame){
+        res.json({error:2});
+        return;
+    }
+    playerSetNum = req.body.playernum;
+
+    playerList.length = playerSetNum;
+    for(let i = 0; i<playerList.length; i++){
+        playerList[i] = false;
+    }
+    handNum = req.body.handnum;
+    gameName = req.body.name;
+    res.json({error:3});
 });
 app.post("/chat",function(req,res) {
     chat[chat.length] = req.body.line;
