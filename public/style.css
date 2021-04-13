@@ -54,3 +54,36 @@ section#carrddeck{
     background-image:url(nihon.gif);
     color:white;
 }
+textarea{
+    
+    
+    border:#793185 5px outset;
+    background-image: url(1981.gif);
+}
+    
+}
+label{
+    border-bottom: double 2px cornflowerblue;
+}
+section{
+    border:#793185 5px outset;
+
+    float: left; 
+   
+    background-image:url(tokyoo.gif);
+    display: block; 
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+        
+    
+}
+section#carrddeck{
+    border:#793185 5px outset;
+    background-image:url(nihon.gif);
+    color:white;
+}
