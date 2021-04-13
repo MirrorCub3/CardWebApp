@@ -1,10 +1,9 @@
 // client js
+let pileNames = [];
 let id = 1;
 function SendMessage(){
     let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value );
     $.post("/chat", {line:chat},function(data){
-      console.log(data.chat);
-      //document.getElementById("chatbox").innerHTML +=  chat + "\n";
       document.getElementById("sendMessage").value = "";
     });
 }
@@ -12,6 +11,10 @@ function sucessInfo(data){
     if(!data)
         return;
     id = data.id;
+    pileNames.length = 0;
+    for(let i = 0; i< data.pilenames.length; i++){
+        pileNames[i] = data.pilenames[i];
+    }
     document.getElementById("nameset").value = "Player " + id;
     document.getElementById("playerId").innerHTML = "PLAYER " + id;
     document.getElementById("gameName").innerHTML = data.gamename;
@@ -30,6 +33,10 @@ function playerCheck() {
         document.getElementById("chatbox").innerHTML = "";
         for(let i = 0; i < data.chat.length;i++){
             document.getElementById("chatbox").innerHTML +=  data.chat[i] + "\n";
+        }
+        pileNames.length = 0;
+        for(let i = 0; i< data.pilenames.length; i++){
+            pileNames[i] = data.pilenames[i];
         }
     });
     let numMilliSeconds = 500;

@@ -18,6 +18,8 @@ let handNum = 1;
 let gameName = "Virtual Cards";
 let deckSize = 52;
 
+let pileNames = [];
+
 let newGame = false;
 let chat = [];
 
@@ -25,8 +27,10 @@ app.get("/",function(req,res) {
     newGame = false;
     numActive = 0;
     chat.length = 0;
+    pileNames.length = 0;
     res.sendFile(__dirname + "/public/views/index.html");
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/player",function(req,res) {
     if(!newGame){
         res.end(" 404 Game Not Found");
@@ -47,13 +51,15 @@ app.get("/player",function(req,res) {
         }
     }
 });
-app.get("/player2",function(req,res) {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/player2",function(req,res) { // called when player doc loads
       let ident = req.query.id;
       if(req.query.index == 1){
           ident = playerId;
-          res.json({id:ident,gamename:gameName});
+          res.json({id:ident,gamename:gameName,pilenames:pileNames});
       }
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/indexCheck",function(req,res) {
     let numTrue = 0;
     for(let i = 0; i < playerList.length; i++){
@@ -65,6 +71,7 @@ app.get("/indexCheck",function(req,res) {
     //console.log("numActive " + numActive);
     res.json({active:numActive});
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/checkplayer", function(req,res){
     if(req.query.active == 0){
       numActive--;
@@ -72,14 +79,20 @@ app.get("/checkplayer", function(req,res){
     }
     else if(req.query.active == 1){
       playerList[req.query.id - 1] = true; // player is active
-      res.json({gamename:gameName,chat:chat});
+      res.json({gamename:gameName,chat:chat,pilenames:pileNames});
     }
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/create",function(req,res) {
     if(req.body.playernum * req.body.handnum > deckSize){
         res.json({error:1});
         return;
     }
+    if(validString(req.body.name) == false){
+        res.json({error:4});
+        return;
+    }
+    //////////////////////////////////////
     newGame = true;
     playerSetNum = req.body.playernum;
 
@@ -90,9 +103,18 @@ app.post("/create",function(req,res) {
     handNum = req.body.handnum;
     //clears chat
     chat.length = 0;
+    pileNames.length = 0;
+    for(let i = 0; i< req.body.pilenames.length; i++){
+        if(validString(req.body.pilenames[i]) == false){
+            res.json({error:4});
+            return;
+        }
+        pileNames[i] = req.body.pilenames[i];
+    }
     gameName = req.body.name;
     res.json({error:0});
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/update",function(req,res) {
     if(req.body.playernum * req.body.handnum > deckSize){
         res.json({error:1});
@@ -102,6 +124,11 @@ app.post("/update",function(req,res) {
         res.json({error:2});
         return;
     }
+    if(validString(req.body.name) == false){
+        res.json({error:4});
+        return;
+    }
+    //////////////////////////////////////
     playerSetNum = req.body.playernum;
 
     playerList.length = playerSetNum;
@@ -109,13 +136,31 @@ app.post("/update",function(req,res) {
         playerList[i] = false;
     }
     handNum = req.body.handnum;
+
+    pileNames.length = 0;
+    for(let i = 0; i< req.body.pilenames.length; i++){
+        if(validString(req.body.pilenames[i]) == false){
+            res.json({error:4});
+            return;
+        }
+        pileNames[i] = req.body.pilenames[i];
+    }
+
     gameName = req.body.name;
     res.json({error:3});
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/chat",function(req,res) {
     chat[chat.length] = req.body.line;
     res.json({chat:chat});
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+function validString(string) {
+    let regex =  /^[A-Za-z0-9 ]*[A-Za-z0-9 ]*$/;
+    let  validString = regex.test(string);
+    return (validString);
+ }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.listen(4005,function(){
     console.log("started on port 4005");
 });
