@@ -35,21 +35,21 @@ function playerCheck() {
             document.getElementById("chatbox").innerHTML +=  data.chat[i] + "\n";
         }
         ////////////////////////////////////////////////////
-        //$(".pileButton").remove(); // clears buttons
+        $(".pileButton").remove(); // clears buttons
         pileNames.length = 0;
         for(let i = 0; i< data.pilenames.length; i++){
             pileNames[i] = data.pilenames[i];
             $('#pileButtons').append('<br class="pileButton"><input type ="button" class="pileButton" id = "">');
         }
-        // let x = 0;
-        // $('.pileButton').each(function(){
-        //     if($(this).is("input")){
-        //         $(this).val(pileNames[x]);
-        //         $(this).attr( 'id', x.toString());
-        //         console.log($(this).id);
-        //         x++;
-        //     }
-        // });
+        let x = 0;
+        $('.pileButton').each(function(){
+            if($(this).is("input")){
+                $(this).val(pileNames[x]);
+                $(this).attr( 'id', x.toString());
+                console.log($(this).id);
+                x++;
+            }
+        });
         ////////////////////////////////////////////////////
     });
     let numMilliSeconds = 500;
