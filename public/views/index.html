@@ -40,10 +40,9 @@
 
                     <div id = "Pile">
                         <label for="pilenum">Number of Piles:</label>
-                        <input id="pilenum" type="number" name="pilenum" min = "0" step = "1"/>
+                        <input id="pilenum" type="number" name="pilenum" min = "0" max = "10" step = "1" title = "Max 10"/>
                         <input id="makePile" type="button" value="Create Piles" title = "Create piles to send cards to"/>
                         <br>
-                        <!-- append text inputs here if $('#pilenum').val() > 0-->
                     </div>
                 </div>
             </fieldset>
@@ -66,7 +65,7 @@
                         pileNames[pileNames.length] = $(this).val();
                     }
                 });
-                $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenames:pileNames},success);
+                $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
             }
             function UpdateGame(){
                 pileNames.length = 0; // clear list
@@ -75,10 +74,9 @@
                         pileNames[pileNames.length] = $(this).val();
                     }
                 });
-                $.post("/update", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenames:pileNames},success);
+                $.post("/update", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
             }
             function CreatePile(){
-                let textElement = $( "input" );
                 $(".pile").remove(); // clear existing
                 for(let i = 0; i < $("#pilenum").val();i++){
                     $('#Pile').append('<br class="pile"><label class="pile"> Pile Name </label> <input type ="text" class="pile" minlength = "1" maxlength = "20">');

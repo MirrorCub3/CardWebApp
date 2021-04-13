@@ -18,9 +18,9 @@
           <label>Username:</label>
           <input id="nameset" type="text">
           <br>
-          <label>Chatbox</label>
+          <label>Chat:</label>
           <br>
-          <textarea id="chatbox" rows= "10" cols="30" readonly></textarea>
+          <textarea id="chatbox" rows= "15" cols="45" readonly style="resize:none"></textarea>
           <br>
           <label>Send Message</label>
           <br>
@@ -30,6 +30,15 @@
 
       </div>
     </section>
+    <section id="box">
+        <fieldset >
+          <legend>Send To Buttons</legend>
+              <div id = "pileButtons">
+                  <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table"><br>
+                  <input id="mainPile" type= "button" value="Send To Main Deck" title= "Send Card to the Main Deck">
+              </div>
+        </fieldset>
+  </section>
       <script src="js/player.js"></script>
   </body>
 </html>

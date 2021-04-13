@@ -103,13 +103,15 @@ app.post("/create",function(req,res) {
     handNum = req.body.handnum;
     //clears chat
     chat.length = 0;
-    pileNames.length = 0;
-    for(let i = 0; i< req.body.pilenames.length; i++){
-        if(validString(req.body.pilenames[i]) == false){
-            res.json({error:4});
-            return;
+    if(req.body.pilenum !=0){
+        pileNames.length = 0;
+        for(let i = 0; i< req.body.pilenames.length; i++){
+            if(validString(req.body.pilenames[i]) == false){
+                res.json({error:4});
+                return;
+            }
+            pileNames[i] = req.body.pilenames[i];
         }
-        pileNames[i] = req.body.pilenames[i];
     }
     gameName = req.body.name;
     res.json({error:0});
@@ -137,13 +139,15 @@ app.post("/update",function(req,res) {
     }
     handNum = req.body.handnum;
 
-    pileNames.length = 0;
-    for(let i = 0; i< req.body.pilenames.length; i++){
-        if(validString(req.body.pilenames[i]) == false){
-            res.json({error:4});
-            return;
+    if(req.body.pilenum !=0){
+        pileNames.length = 0;
+        for(let i = 0; i< req.body.pilenames.length; i++){
+            if(validString(req.body.pilenames[i]) == false){
+                res.json({error:4});
+                return;
+            }
+            pileNames[i] = req.body.pilenames[i];
         }
-        pileNames[i] = req.body.pilenames[i];
     }
 
     gameName = req.body.name;
