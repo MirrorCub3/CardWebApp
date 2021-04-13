@@ -4,8 +4,12 @@ body{
     font-style: oblique;
     font-variant: small-caps;
 }
+
 header {
-    background-image:url(settingsbg.gif);
+    color: white;
+
+    
+    background-image:url(1981.gif);
     font: 10px;
     border-style: outset;
     border-color:#793185;
