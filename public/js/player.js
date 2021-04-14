@@ -45,8 +45,8 @@ function playerCheck() {
         $('.pileButton').each(function(){
             if($(this).is("input")){
                 $(this).val(pileNames[x]);
-                $(this).attr( 'id', x.toString());
-                console.log($(this).id);
+                $(this).attr( 'id',x.toString());
+                //console.log($(this).attr("id"));
                 x++;
             }
         });
