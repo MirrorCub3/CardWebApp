@@ -159,6 +159,23 @@ app.post("/chat",function(req,res) {
     res.json({chat:chat});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/sendto",function(req,res) {
+    if(req.body.name === "Table"){
+        console.log("to table");
+        // send to table function here//
+        res.json(null);
+    }
+    else if(req.body.name == "Main Deck"){
+        console.log("to Main Deck");
+        // send to Main function here//
+        res.json(null);
+    }
+    else if (pileNames[req.body.id] == req.body.name){ // if the array index matched the name of the button made
+        console.log(pileNames[req.body.id] + " " + req.body.name);
+        res.json(null);
+    }
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function validString(string) {
     let regex =  /^[A-Za-z0-9 ]*[A-Za-z0-9 ]*$/;
     let  validString = regex.test(string);

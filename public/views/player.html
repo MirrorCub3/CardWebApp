@@ -30,12 +30,13 @@
 
       </div>
     </section>
+    <!--<canvas id="canvas"  style="position:absolute; "></canvas>-->
     <section id="box">
         <fieldset >
           <legend>Send To Buttons</legend>
               <div id = "pileButtons">
-                  <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table"><br>
-                  <input id="mainPile" type= "button" value="Send To Main Deck" title= "Send Card to the Main Deck">
+                  <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table" onClick = "SendTo(this)"><br>
+                  <input id="mainPile" type= "button" value="Send To Main Deck" title= "Send Card to the Main Deck" onClick = "SendTo(this)">
               </div>
         </fieldset>
   </section>

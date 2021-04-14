@@ -23,10 +23,10 @@
             <legend>Player Settings</legend>
                 <div id = "Player">
                     <label for="playernum">Number of Players:</label>
-                    <input id="playernum" type="number" name="playernum" min = "1" step = "1"><br>
+                    <input id="playernum" type="number" name="playernum" min = "1" max = "20" step = "1" title = "Max 20 players"><br>
 
                     <label for="hand">Starting Hand:</label>
-                    <input id="hand" type="number" name="hand" min = "1" step = "1" title = "The amount of cards each player starts with"><br>
+                    <input id="hand" type="number" name="hand" min = "1" max = "52" step = "1" title = "The amount of cards each player starts with"><br>
                 </div>
             </fieldset>
             </section>
@@ -67,6 +67,7 @@
                 });
                 $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function UpdateGame(){
                 pileNames.length = 0; // clear list
                 $('.pile').each(function(){
@@ -76,6 +77,7 @@
                 });
                 $.post("/update", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function CreatePile(){
                 $(".pile").remove(); // clear existing
                 for(let i = 0; i < $("#pilenum").val();i++){
@@ -83,6 +85,7 @@
                 }
                 console.log("Piles Created");
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function success(data) {
                 if (data.error == 1){
                   alert("Invalid Starting Hand");
@@ -100,21 +103,25 @@
                   alert("Text Inputs Can Only Include Letters And Numbers");
                 }
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             check();
             function check() {
                 $.get("/indexCheck", checkSuccess);
                 let numMilliSeconds = 1000;
                 setTimeout(check, numMilliSeconds);
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function checkSuccess(data){
                 document.getElementById("numPlayers").innerHTML = "Active Players: " + data.active;
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             $(document).ready(function(){
                 console.log("ready");
                 $("#CreateGameButton").click(SetGame);
                 $("#updateButton").click(UpdateGame);
                 $("#makePile").click(CreatePile);
             });
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
         </script>
     </body>
 </html>
