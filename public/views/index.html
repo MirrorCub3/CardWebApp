@@ -36,7 +36,7 @@
             <legend>Game Settings</legend>
                 <div id = "Game">
                     <label for = "name"> Game Name:</label>
-                    <input id = "name" type = "text" name = "name" maxlength="121" title = "Limit 121 characters"> <br>
+                    <input id = "name" type = "text" name = "name" maxlength="25" title = "Limit 25 characters"> <br>
 
                     <!--<div id = "Pile">
                         <label for="pilenum">Number of Piles:</label>
@@ -53,7 +53,8 @@
             <br>
             <input type="reset" name="reset" value="Reset">
             <input id = "CreateGameButton" type="button" value="Create Game" title= "Start new game - this will clear any previous game history">
-            <input id = "updateButton" type="button" value="Update" title= "Update and refresh current game settings">
+            <input id = "updateButton" type="button" value="Update Name" title= "Update and refresh current game name">
+            <input id = "end" type="button" value="End Game" title= "End the urrent Running Game">
         </section>
         </form>
 
@@ -70,6 +71,16 @@
                 $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val()},success);
             }
             function UpdateGame(){
+                // pileNames.length = 0; // clear list
+                // $('.pile').each(function(){
+                //     if($(this).is("input")){
+                //         pileNames[pileNames.length] = $(this).val();
+                //     }
+                // });
+                //$.post("/update", {name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
+                $.post("/update", {name:$("#name").val()},success);
+            }
+            function EndGame(){
                 // pileNames.length = 0; // clear list
                 // $('.pile').each(function(){
                 //     if($(this).is("input")){
@@ -118,6 +129,7 @@
                 console.log("ready");
                 $("#CreateGameButton").click(SetGame);
                 $("#updateButton").click(UpdateGame);
+                $("#end").click(Endgame);
                 //$("#makePile").click(CreatePile);
             });
         </script>

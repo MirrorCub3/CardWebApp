@@ -6,3 +6,4 @@ Need:
 - a draw card button
 - a canvas that is set to display 3 players and yourself
 - discard pile and main pile - change main to draw card and discard to send only
+- if the game name is empty - default title
