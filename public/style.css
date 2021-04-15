@@ -56,12 +56,12 @@ section#carrddeck{
 }
 textarea{
     
-    
+    color:whitesmoke;   
     border:#793185 5px outset;
-    background-image: url(1981.gif);
+    background-image: url(sss.jpg);
 }
     
-}
+
 label{
     border-bottom: double 2px cornflowerblue;
 }
