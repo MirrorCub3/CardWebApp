@@ -4,6 +4,9 @@ body{
     font-style: italic;
     font-variant: small-caps;
 }
+.container{
+    align-items: flex-start;
+}
 header.h3{
     background-image: url(nihon.gif)repeat;
     background-clip: border-box;
@@ -13,6 +16,7 @@ header.h3{
 header {
     background-image:url(tokyoo.gif);
     font: 10px;
+    width: 400px;
     border-style: outset;
     border-color:#793185;
     border-width: 5px;
@@ -22,7 +26,8 @@ header {
     margin-block-start: 0.67em;
     margin-block-end: 0.67em;
     margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    
+    resize:none;
    
 }
 div {
@@ -37,7 +42,7 @@ section{
 
     float: left; 
    
-    background-image:url(tokyoo.gif);
+    background-image:url(sds.jpg);
     display: block; 
     margin-inline-start: 2px;
     margin-inline-end: 2px;
@@ -49,11 +54,7 @@ section{
         
     
 }
-section#carrddeck{
-    border:#793185 5px outset;
-    background-image:url(nihon.gif);
-    color:white;
-}
+
 textarea{
     
     color:whitesmoke;   
@@ -70,7 +71,7 @@ section{
 
     float: left; 
    
-    background-image:url(tokyoo.gif);
+    background-image:url(sds.jpg);
     display: block; 
     margin-inline-start: 2px;
     margin-inline-end: 2px;
@@ -86,4 +87,8 @@ section#carrddeck{
     border:#793185 5px outset;
     background-image:url(nihon.gif);
     color:white;
+}
+canvas{
+    align-items: flex-start;
+    float:left;
 }
