@@ -23,7 +23,7 @@
             <legend>Player Settings</legend>
                 <div id = "Player">
                     <label for="playernum">Number of Players:</label>
-                    <input id="playernum" type="number" name="playernum" min = "1" step = "1"><br>
+                    <input id="playernum" type="number" name="playernum" min = "1" max = "4" step = "1" title = "Max 4 players"><br>
 
                     <label for="hand">Starting Hand:</label>
                     <input id="hand" type="number" name="hand" min = "1" step = "1" title = "The amount of cards each player starts with"><br>
@@ -38,12 +38,13 @@
                     <label for = "name"> Game Name:</label>
                     <input id = "name" type = "text" name = "name" maxlength="121" title = "Limit 121 characters"> <br>
 
-                    <div id = "Pile">
+                    <!--<div id = "Pile">
                         <label for="pilenum">Number of Piles:</label>
                         <input id="pilenum" type="number" name="pilenum" min = "0" max = "10" step = "1" title = "Max 10"/>
                         <input id="makePile" type="button" value="Create Piles" title = "Create piles to send cards to"/>
                         <br>
                     </div>
+                  -->
                 </div>
             </fieldset>
             <br>
@@ -57,32 +58,36 @@
         </form>
 
         <script>
-            let pileNames = [];
+            // let pileNames = [];
             function SetGame(){
-                pileNames.length = 0; // clear list
-                $('.pile').each(function(){
-                    if($(this).is("input")){
-                        pileNames[pileNames.length] = $(this).val();
-                    }
-                });
-                $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
+                // pileNames.length = 0; // clear list
+                // $('.pile').each(function(){
+                    // if($(this).is("input")){
+                        // pileNames[pileNames.length] = $(this).val();
+                    // }
+                // });
+                //$.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
+                $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val()},success);
             }
             function UpdateGame(){
-                pileNames.length = 0; // clear list
-                $('.pile').each(function(){
-                    if($(this).is("input")){
-                        pileNames[pileNames.length] = $(this).val();
-                    }
-                });
-                $.post("/update", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
+                // pileNames.length = 0; // clear list
+                // $('.pile').each(function(){
+                //     if($(this).is("input")){
+                //         pileNames[pileNames.length] = $(this).val();
+                //     }
+                // });
+                //$.post("/update", {name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
+                $.post("/update", {name:$("#name").val()},success);
             }
-            function CreatePile(){
-                $(".pile").remove(); // clear existing
-                for(let i = 0; i < $("#pilenum").val();i++){
-                    $('#Pile').append('<br class="pile"><label class="pile"> Pile Name </label> <input type ="text" class="pile" minlength = "1" maxlength = "20">');
-                }
-                console.log("Piles Created");
-            }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // function CreatePile(){
+            //     $(".pile").remove(); // clear existing
+            //     for(let i = 0; i < $("#pilenum").val();i++){
+            //         $('#Pile').append('<br class="pile"><label class="pile"> Pile Name </label> <input type ="text" class="pile" minlength = "1" maxlength = "20">');
+            //     }
+            //     console.log("Piles Created");
+            // }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function success(data) {
                 if (data.error == 1){
                   alert("Invalid Starting Hand");
@@ -113,7 +118,7 @@
                 console.log("ready");
                 $("#CreateGameButton").click(SetGame);
                 $("#updateButton").click(UpdateGame);
-                $("#makePile").click(CreatePile);
+                //$("#makePile").click(CreatePile);
             });
         </script>
     </body>

@@ -18,7 +18,7 @@ let handNum = 1;
 let gameName = "Virtual Cards";
 let deckSize = 52;
 
-let pileNames = [];
+//let pileNames = [];
 
 let newGame = false;
 let chat = [];
@@ -27,7 +27,7 @@ app.get("/",function(req,res) {
     newGame = false;
     numActive = 0;
     chat.length = 0;
-    pileNames.length = 0;
+    //pileNames.length = 0;
     res.sendFile(__dirname + "/public/views/index.html");
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,8 @@ app.get("/player2",function(req,res) { // called when player doc loads
       let ident = req.query.id;
       if(req.query.index == 1){
           ident = playerId;
-          res.json({id:ident,gamename:gameName,pilenames:pileNames});
+          //res.json({id:ident,gamename:gameName,pilenames:pileNames});
+          res.json({id:ident,gamename:gameName});
       }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,7 +80,8 @@ app.get("/checkplayer", function(req,res){
     }
     else if(req.query.active == 1){
       playerList[req.query.id - 1] = true; // player is active
-      res.json({gamename:gameName,chat:chat,pilenames:pileNames});
+      //res.json({gamename:gameName,chat:chat,pilenames:pileNames});
+      res.json({gamename:gameName,chat:chat});
     }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,16 +105,16 @@ app.post("/create",function(req,res) {
     handNum = req.body.handnum;
     //clears chat
     chat.length = 0;
-    if(req.body.pilenum !=0){
-        pileNames.length = 0;
-        for(let i = 0; i< req.body.pilenames.length; i++){
-            if(validString(req.body.pilenames[i]) == false){
-                res.json({error:4});
-                return;
-            }
-            pileNames[i] = req.body.pilenames[i];
-        }
-    }
+    // if(req.body.pilenum !=0){
+    //     pileNames.length = 0;
+    //     for(let i = 0; i< req.body.pilenames.length; i++){
+    //         if(validString(req.body.pilenames[i]) == false){
+    //             res.json({error:4});
+    //             return;
+    //         }
+    //         pileNames[i] = req.body.pilenames[i];
+    //     }
+    // }
     gameName = req.body.name;
     res.json({error:0});
 });
@@ -131,24 +133,16 @@ app.post("/update",function(req,res) {
         return;
     }
     //////////////////////////////////////
-    playerSetNum = req.body.playernum;
-
-    playerList.length = playerSetNum;
-    for(let i = 0; i<playerList.length; i++){
-        playerList[i] = false;
-    }
-    handNum = req.body.handnum;
-
-    if(req.body.pilenum !=0){
-        pileNames.length = 0;
-        for(let i = 0; i< req.body.pilenames.length; i++){
-            if(validString(req.body.pilenames[i]) == false){
-                res.json({error:4});
-                return;
-            }
-            pileNames[i] = req.body.pilenames[i];
-        }
-    }
+    // if(req.body.pilenum !=0){
+    //     pileNames.length = 0;
+    //     for(let i = 0; i< req.body.pilenames.length; i++){
+    //         if(validString(req.body.pilenames[i]) == false){
+    //             res.json({error:4});
+    //             return;
+    //         }
+    //         pileNames[i] = req.body.pilenames[i];
+    //     }
+    // }
 
     gameName = req.body.name;
     res.json({error:3});
@@ -158,6 +152,23 @@ app.post("/chat",function(req,res) {
     chat[chat.length] = req.body.line;
     res.json({chat:chat});
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// app.post("/sendto",function(req,res) {
+//     if(req.body.name === "Table"){
+//         console.log("to table");
+//         // send to table function here//
+//         res.json(null);
+//     }
+//     else if(req.body.name == "Main Deck"){
+//         console.log("to Main Deck");
+//         // send to Main function here//
+//         res.json(null);
+//     }
+//     else if (pileNames[req.body.id] == req.body.name){ // if the array index matched the name of the button made
+//         console.log(pileNames[req.body.id] + " " + req.body.name);
+//         res.json(null);
+//     }
+// });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function validString(string) {
     let regex =  /^[A-Za-z0-9 ]*[A-Za-z0-9 ]*$/;
