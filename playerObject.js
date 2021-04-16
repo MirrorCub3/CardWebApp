@@ -1,8 +1,8 @@
 module.exports = class Player {
-    constructor(_name) {
+    constructor() {
         this.hand = [];
-        this.id = 0;
         this.realId = 0;
+        this.id = ++this.realId;
         this.name = "Player " + this.id;
     }
 }
