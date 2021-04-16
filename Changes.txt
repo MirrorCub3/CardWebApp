@@ -23,10 +23,11 @@ Changes 4/15
 - player hand is generated and sent once the player document.ready if starting hand is > 0
 	- draws the same way as irl - from the index 0 (top) of the pile
 	- this data is saved in the server upon creation (/player2)
-	- if the game has not ended yet, the player will rejoin with their previous hand
+	- if the game has not ended yet, the player will rejoin with their previous hand - saves all the player's hands
 		- this can be changed to not save data later on
 - draw card method appears to be working - not sure what to do when the deck is empty
 - draw button will disable if there's no cards left
+- the unchangable values on the settings screen will disable when the game starts
 
 Need:
 - a draw card button, table button, and discard along with all their functions
@@ -40,7 +41,6 @@ Need:
 - create a send to table button while kayla makes a click and drag canvas function - choose the perferred method
 - erase player index data like the cards they have when they leave - send their cards to the main when they leave
 	- if someone joins in their place - give them a new random hand if at all possible OR dont clear data and save until new game
-- bug with player index if pages are opened at the same time
 Want:
 - custom deck - setting the numbers of each card type
 - joker checkbox - in case a game wants jokers, it'll add 2 to the list
