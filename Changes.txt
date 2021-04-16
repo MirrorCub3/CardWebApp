@@ -7,6 +7,7 @@ Changes 4/15
 - default title - custom title max 25 characters
 - player names dynamically change; added to the playerName string array in index5.js - displays "empty" if the player spot is not filled
 - cannot create game while one is in progress - must end game to create a new one
+	- the button function changes to reflect this - all in one button
 - created a real time calculation on the starting hand so the max of the num input changes based on the current player count even before game creation
 	- if the value is too high for the current player number, it will set the value to the highest possible
 	- error message kept just in case because of the one second delay
@@ -24,6 +25,9 @@ Changes 4/15
 	- this data is saved in the server upon creation (/player2)
 	- if the game has not ended yet, the player will rejoin with their previous hand
 		- this can be changed to not save data later on
+- draw card method appears to be working - not sure what to do when the deck is empty
+- draw button will disable if there's no cards left
+
 Need:
 - a draw card button, table button, and discard along with all their functions
 	- store player hand in an array within an array - accessable to players via their id
@@ -36,6 +40,7 @@ Need:
 - create a send to table button while kayla makes a click and drag canvas function - choose the perferred method
 - erase player index data like the cards they have when they leave - send their cards to the main when they leave
 	- if someone joins in their place - give them a new random hand if at all possible OR dont clear data and save until new game
+- bug with player index if pages are opened at the same time
 Want:
 - custom deck - setting the numbers of each card type
 - joker checkbox - in case a game wants jokers, it'll add 2 to the list

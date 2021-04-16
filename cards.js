@@ -38,10 +38,28 @@ module.exports = class Deck {
       // }
     }
     Draw(){
-        this.returnCard = this.deck[0];
-        this.deck.splice(0, 1); // draws from the beginning of the array and removes it afterwards
-        console.log(this.deck.length);
-        return(this.returnCard);
+        if(this.deck.length > 0){
+            this.returnCard = this.deck[0];
+            this.deck.splice(0, 1); // draws from the beginning of the array and removes it afterwards
+            return(this.returnCard);
+        }
+        else{
+            return(null);
+        }
+    }
+    ReturnHand(hand){
+        for (let card in hand){
+            this.deck[this.deck.length] = hand[card];
+        }
+    }
+    CheckEmpty(){
+        if(this.deck.length < 1){
+            return(true);
+        }
+        else {
+          return(false);
+        }
+        //$('input').prop('readonly',true);
     }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

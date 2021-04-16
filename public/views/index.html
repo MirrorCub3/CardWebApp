@@ -46,8 +46,8 @@
         <section id="submit">
             <br>
             <input type="reset" name="reset" value="Reset">
-            <input id = "CreateGameButton" type="button" value="Create Game" title= "Start new game - this will clear any previous game history">
-            <input id = "end" type="button" value="End Game" title= "End the urrent Running Game">
+            <input id = "GameButton" type="button" value="Create Game" title= "Start new game - this will clear any previous game history" onClick="SetGame()">
+            <!--<input id = "end" type="button" value="End Game" title= "End the Current Running Game">-->
         </section>
         </form>
 
@@ -66,13 +66,23 @@
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function success(data) {
                 switch(data.error) {
-                    case 0: alert("Game Created!");;break;
+                    // case 0: alert("Game Created!");;break;
                     case 1: alert("Invalid Starting Hand");break;
                     case 2: alert("No Current Game");break;
                     case 3: alert("Name Updated");break;
                     case 4: alert("Text Inputs Can Only Include Letters And Numbers");break;
-                    case 5: alert("Game Ended");break;
-                    case 6: alert("Bad Create: Game In Progress");break;
+                    // case 5: alert("Game Ended");break;
+                    // case 6: alert("Bad Create: Game In Progress");break;
+                }
+                if($("#GameButton").val() == "Create Game"){
+                    $("#GameButton").val("End Game");
+                    $("#GameButton").attr( 'title',"End the Current Running Game");
+                    $("#GameButton").attr( 'onClick',"EndGame()");
+                }
+                else if($("#GameButton").val() == "End Game"){
+                    $("#GameButton").val("Create Game");
+                    $("#GameButton").attr( 'title',"Start new game - this will clear any previous game history");
+                    $("#GameButton").attr( 'onClick',"SetGame()");
                 }
             }
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,17 +95,33 @@
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function checkSuccess(data){
                 document.getElementById("numPlayers").innerHTML = "Active Players: " + data.active;
-                $("#hand").attr( 'max',data.maxhand);
-                if($("#hand").val() > data.maxhand){
-                    $("#hand").val(data.maxhand)
+                if(data.gameactive == true){
+                    $('#playernum').attr("disabled", true);
+                    $('#hand').attr("disabled", true);
+
+                    $("#GameButton").val("End Game");
+                    $("#GameButton").attr( 'title',"End the Current Running Game");
+                    $("#GameButton").attr( 'onClick',"EndGame()");
+                }
+                else if(data.gameactive == false){
+                    $('#playernum').removeAttr("disabled");
+                    $('#hand').removeAttr("disabled");
+
+                    $("#hand").attr( 'max',data.maxhand);
+                    if($("#hand").val() > data.maxhand){
+                        $("#hand").val(data.maxhand)
+                    }
+                    $("#GameButton").val("Create Game");
+                    $("#GameButton").attr( 'title',"Start new game - this will clear any previous game history");
+                    $("#GameButton").attr( 'onClick',"SetGame()");
                 }
             }
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             $(document).ready(function(){
                 console.log("ready");
-                $("#CreateGameButton").click(SetGame);
+                //$("#GameButton").click(SetGame);
                 $("#updateButton").click(UpdateGame);
-                $("#end").click(EndGame);
+                //$("#end").click(EndGame);
                 $.get("/start",function(data){
                     if(!data)
                         return;

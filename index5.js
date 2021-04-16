@@ -38,16 +38,15 @@ app.get("/player",function(req,res) {
     if(!gameActive){
         res.end(" 404 Game Not Found");
     }
-    if(numActive >= playerSetNum){
+    else if(numActive >= playerSetNum){
         res.end("Error! Player Count Exceeded");
     }
     else{
         res.sendFile(__dirname + "/public/views/player.html");
-        numActive++;
         let indexFound = false;
         for(let i = 0; i < playerList.length; i++){
             if(playerList[i] == false && indexFound == false){
-                playerList[i] = true;
+                //playerList[i] = true;
                 playerId = ++i;
                 indexFound = true;
             }
@@ -56,23 +55,33 @@ app.get("/player",function(req,res) {
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/player2",function(req,res) { // called when player doc loads
+      numActive++;
+      playerList[--playerId] = true;
       let ident = req.query.id;
       if(req.query.index == 1){ // index = 1 is a newly joined player
-          ident = playerId;
+          ident = ++playerId;
           let hand = [];
+          hand.length = 0;
           if(handNum !=0){
-              if(playerHands[ident-1] == null){ // if the player has no existing hand - give them the amount for a starting hand
+              if(playerHands[ident-1].length == 0){ // if the player has no existing hand - give them the amount for a starting hand
                   for(let i = 0; i < handNum;i++){
                       hand[i] = myDeck.Draw(); //calling a method in the cards.js class
                   }
+                  for(let i = 0; i < hand.length;i++){
+                      if(hand[i] == null){
+                          hand.splice(i, 1); // removing null cards
+                      }
+                  }
                   playerHands[ident-1] = hand;
               }
+              //////////////////////////////////////////////////// CODE THAT REMEMBER'S THE PLAYER'S HAND
               else if(playerHands[ident-1] != null){ // if they were already playing, this will send them back their existing hand
-                hand =   playerHands[ident-1];
+                hand = playerHands[ident-1];
               }
+              ////////////////////////////////////////////////////
           }
           else{
-              playerHands[ident-1] = null;
+              playerHands[ident-1] = hand;
           }
           res.json({id:ident,gamename:gameName,hand:hand});
       }
@@ -88,7 +97,7 @@ app.get("/indexCheck",function(req,res) {
     numActive = numTrue;
     //////////////////////////////////////////////////
     maxHand = parseInt(myDeck.deck.length/req.query.playernum);
-    res.json({active:numActive,maxhand:maxHand});
+    res.json({active:numActive,maxhand:maxHand, gameactive:gameActive});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/checkplayer", function(req,res){
@@ -96,11 +105,16 @@ app.get("/checkplayer", function(req,res){
       numActive--;
       playerList[req.query.id] = false; // player inactive
       playerName[req.query.id] = "empty";
+      // ///////////////// CODE THAT REMOVES PLAYER'S CARDS WHEN THEY LEAVE
+      // myDeck.ReturnHand(playerHands[req.query.id]);
+      // playerHands[req.query.id].length = 0;
+      // /////////////////
     }
     else if(req.query.active == 1){
       playerList[req.query.id] = true; // player is active
       playerName[req.query.id] = req.query.playername;
-      res.json({gamename:gameName,chat:chat});
+      let empty = myDeck.CheckEmpty();
+      res.json({gamename:gameName,chat:chat,empty:empty});
     }
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,15 +123,30 @@ app.get("/end", function(req,res){
       res.json({error:2});
       return;
     }
-   gameActive = false;
+    myDeck = new Deck();
+    gameActive = false;
     chat.length = 0;
+    for(let i = 0; i<playerHands.length; i++){
+        playerHands[i].length = 0;
+    }
     res.json({error:5});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/drawcard",function(req,res) {
     let cards = [];
-    
-    res.json({hand:hand});
+    for(let i = 0; i < req.query.num;i++){
+        cards[cards.length] = myDeck.Draw(); //calling a method in the cards.js class
+    }
+    for(let i = 0; i < cards.length;i++){
+        if(cards[i] == null){
+            cards.splice(i, 1); // removing null cards
+        }
+        else{ // if not null, add it to the list
+            playerHands[req.query.id][playerHands[req.query.id].length] = cards[i];
+        }
+    }
+    //console.log(playerHands);
+    res.json({cards:cards});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/create",function(req,res) {
@@ -150,15 +179,30 @@ app.post("/create",function(req,res) {
     handNum = req.body.handnum;
     playerHands.length = playerSetNum;
     for(let i = 0; i<playerHands.length; i++){
-        playerHands[i] = null;
+          let hand = [];
+          hand.length = 0;
+          if(handNum !=0){
+              for(let i = 0; i < handNum;i++){
+                  hand[i] = myDeck.Draw(); //calling a method in the cards.js class
+              }
+              for(let i = 0; i < hand.length;i++){
+                  if(hand[i] == null){
+                      hand.splice(i, 1); // removing null cards
+                  }
+              }
+              playerHands[i] = hand;
+          }
+          else{
+              playerHands[i] = hand;
+          }
     }
     //clears chat
     chat.length = 0;
-    if(req.body.name != ""){
-        gameName = req.body.name;
+    if(/^[ ]*[ ]*$/.test(req.body.name) == true){
+        gameName = defaultName;
     }
     else{
-        gameName = defaultName;
+        gameName = req.body.name;
     }
     res.json({error:0});
 });
@@ -173,11 +217,11 @@ app.post("/update",function(req,res) {
         return;
     }
     //////////////////////////////////////
-    if(req.body.name != ""){
-        gameName = req.body.name;
+    if(/^[ ]*[ ]*$/.test(req.body.name) == true){
+        gameName = defaultName;
     }
     else{
-        gameName = defaultName;
+        gameName = req.body.name;
     }
     res.json({error:3});
 });

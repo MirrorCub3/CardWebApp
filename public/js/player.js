@@ -10,8 +10,18 @@ function SendMessage(){
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function DrawCard(){
-    console.log("draw");
     $.get("/drawcard", {num:1,id:realId},function(data){
+        if(!data)
+          return;
+        if(data.cards.length <1){
+            console.log("main deck empty");
+            return;
+        }
+        for(let card in data.cards){
+          myHand[myHand.length] = data.cards[card];
+        }
+        console.log("draw success");
+        console.log(myHand);
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,7 +51,9 @@ $(document).ready(function(){
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('beforeunload',function () {
-    $.get("/checkplayer", {active:0,id:realId},null);
+    $.get("/checkplayer", {active:0,id:realId},function(){
+      myHand.length = 0;
+    });
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 playerCheck();
@@ -52,12 +64,23 @@ function playerCheck() {
         for(let i = 0; i < data.chat.length;i++){
             document.getElementById("chatbox").innerHTML +=  data.chat[i] + "\n";
         }
-        // update card hand here
+        if(data.empty == true){
+          $("#main").val("Empty");
+          $('#main').attr("disabled", true);
+          $('#main').attr( 'title',"There are 0 cards in the Main Deck");
+        }
+        else if(data.empty == false){
+          $("#main").val("Draw Card");
+          $('#main').removeAttr("disabled");
+          $('#main').attr( 'title',"Draw one card");
+        }
+        // update opponesnt card hand here
     });
     let numMilliSeconds = 500;
     setTimeout(playerCheck, numMilliSeconds);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //queen cards
   let queenHearts =  "https://th.bing.com/th/id/R15e43a712ac44407d23c437b0a5b43bc?rik=owXOaoa1K9k1hw&riu=http%3a%2f%2fwww.madore.org%2f%7edavid%2fimages%2fcards%2fenglish%2fqueen-hearts.png&ehk=ObI7ptH3rqsbSRCMH%2baABEIOJXiXCpxbYjPJ%2bfvyigs%3d&risl=&pid=ImgRaw"
 
@@ -269,8 +292,6 @@ let tenHearts =  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/10_o
 
 
 window.addEventListener('load', eventWindowLoaded, false);
-
-
 function eventWindowLoaded() {
    canvasApp();
    //change card holder to acutal card
@@ -322,9 +343,6 @@ theCanvas.addEventListener("mousemove",onMouseMove,false);
 theCanvas.addEventListener("click",onMouseClick,false);
 
 
-
-
-
    if (!theCanvas || !theCanvas.getContext) {
       return;
    }
@@ -335,9 +353,6 @@ theCanvas.width =   window.innerWidth-360
 theCanvas.height = window.innerHeight-300
 theCanvas.style.left =  window.innerHeight-(window.innerHeight-430) + "px"
 theCanvas.style.top = "20px"
-
-
-
 
 
    if (!context) {
@@ -423,13 +438,8 @@ theCanvas.style.top = "20px"
        }
 }
 
-
-
    function paint()
    {
-
-
-
 
    // draw table background
     context.fillStyle = '#186110';
