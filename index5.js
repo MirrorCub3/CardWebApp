@@ -105,6 +105,10 @@ app.get("/end", function(req,res){
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/drawcard",function(req,res) {
+    if(myDeck.CheckEmpty()){
+        res.json(null);
+        return;
+    }
     let cards = [];
     for(let x = 0; x < req.query.num;x++){
         cards[cards.length] = myDeck.Draw(); //calling a method in the cards.js class
@@ -113,6 +117,7 @@ app.get("/drawcard",function(req,res) {
         if(cards[card] == null){
             cards.splice(card, 1); // removing null cards
         }
+        console.log(cards);
         let myHand = playerList[req.query.id];
         myHand.hand[myHand.hand.length] = cards[card];
     }

@@ -13,7 +13,4 @@ module.exports = class Player {
         this.id = this.realId + 1;
         this.name = "Player " + this.id;
     }
-    setHand(arr){
-
-    }
 }

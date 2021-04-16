@@ -13,10 +13,6 @@ function DrawCard(){
     $.get("/drawcard", {num:1,id:realId},function(data){
         if(!data)
           return;
-        if(data.cards.length <1){
-            console.log("main deck empty");
-            return;
-        }
         myHand.length = 0;
         myHand = data.cards;
         console.log("draw success");
@@ -57,10 +53,7 @@ window.addEventListener('beforeunload',function () {
 playerCheck();
 function playerCheck() {
     $.get("/checkplayer", {active:1,id:realId,playername:$("#nameset").val()},function(data){
-        if(data.gameActive == false){
-            $.get("/checkplayer", {active:0,id:realId},function(){
-                  window.location.reload(true);
-            });
+        if(data.gameActive == false){  window.location.reload(true);
         }
         document.getElementById("gameName").innerHTML = data.gamename;
         document.getElementById("chatbox").innerHTML = "";
