@@ -49,6 +49,7 @@ app.get("/player2",function(req,res) { // called when player doc loads
       if(openIndex >= playerList.length)
           return;
       playerList[openIndex].active = true;
+      //console.log(playerList[openIndex].hand);
       res.json({id:playerList[openIndex].id,realid:playerList[openIndex].realId,gamename:gameName,hand:playerList[openIndex].hand});
       openIndex++;
 });
@@ -110,10 +111,10 @@ app.get("/drawcard",function(req,res) {
     }
     for(let card in cards){
         if(cards[card] == null){
-            cards.splice(i, 1); // removing null cards
+            cards.splice(card, 1); // removing null cards
         }
         let myHand = playerList[req.query.id];
-        myHand[myHand.lemgth] = cards[card];
+        myHand.hand[myHand.hand.length] = cards[card];
     }
     res.json({cards:playerList[req.query.id].hand});
 });

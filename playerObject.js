@@ -1,5 +1,5 @@
 module.exports = class Player {
-    constructor( id ) {
+    constructor(id) {
         this.active = false;
         this.hand = [];
         this.realId = id;
