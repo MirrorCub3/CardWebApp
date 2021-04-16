@@ -218,7 +218,7 @@ let tenHearts =  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/10_o
   tempCard8.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
 
 
-//card holders for table
+//card holders for other players  table (turn into arrays that are made in loops for sake of space??)
 //left of table
     let tempCard9 = new Image()
   tempCard9.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
@@ -249,10 +249,19 @@ let tenHearts =  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/10_o
     let tempCard17 = new Image()
   tempCard17.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
 
+  //players table 
+ let tempCard18 = new Image()
+  tempCard18.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
+
+    let tempCard19 = new Image()
+  tempCard19.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
+
+    let tempCard20 = new Image()
+  tempCard20.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
 
 //setting window width and height
  window.innerWidth = 1920
-  window.innerHeight = 970
+  window.innerHeight = 1015
 
 
 
@@ -264,25 +273,29 @@ function eventWindowLoaded() {
    //change card holder to acutal card
    //players hand cards
         tempCard1.src = queenHearts.replace('90x90', '225x225');
-         tempCard2.src = queenSpades.replace('90x90', '225x225');
-          tempCard3.src = queenDiamonds.replace('90x90', '225x225')
-            tempCard4.src = queenClovers.replace('90x90', '225x225');
-              tempCard5.src = kingHearts.replace('90x90', '225x225');
-              tempCard6.src = kingSpades.replace('90x90', '225x225')
-             tempCard7.src = kingDiamonds.replace('90x90', '225x225');
-              tempCard8.src = kingClovers.replace('90x90', '225x225');
+        tempCard2.src = queenSpades.replace('90x90', '225x225');
+        tempCard3.src = queenDiamonds.replace('90x90', '225x225')
+        tempCard4.src = queenClovers.replace('90x90', '225x225');
+        tempCard5.src = kingHearts.replace('90x90', '225x225');
+        tempCard6.src = kingSpades.replace('90x90', '225x225')
+        tempCard7.src = kingDiamonds.replace('90x90', '225x225');
+        tempCard8.src = kingClovers.replace('90x90', '225x225');
 
-//table cards
-                 tempCard9.src = jackHearts.replace('90x90', '225x225');
-         tempCard10.src = jackSpades.replace('90x90', '225x225');
-          tempCard11.src = jackDiamonds.replace('90x90', '225x225')
-            tempCard12.src = jackClovers.replace('90x90', '225x225');
-              tempCard13.src = aceHearts.replace('90x90', '225x225');
-              tempCard14.src = aceSpades.replace('90x90', '225x225')
-             tempCard15.src = aceDiamonds.replace('90x90', '225x225');
-              tempCard16.src = aceClovers.replace('90x90', '225x225');
-                 tempCard17.src = twoHearts.replace('90x90', '225x225');
+//table cards (other players)
+        tempCard9.src = jackHearts.replace('90x90', '225x225');
+        tempCard10.src = jackSpades.replace('90x90', '225x225');
+        tempCard11.src = jackDiamonds.replace('90x90', '225x225')
+        tempCard12.src = jackClovers.replace('90x90', '225x225')
+        tempCard13.src = aceHearts.replace('90x90', '225x225');
+        tempCard14.src = aceSpades.replace('90x90', '225x225')
+        tempCard15.src = aceDiamonds.replace('90x90', '225x225');
+        tempCard16.src = aceClovers.replace('90x90', '225x225');
+        tempCard17.src = twoHearts.replace('90x90', '225x225');
 
+//table for player (not other players)
+        tempCard18.src = twoClover.replace('90x90', '225x225');
+        tempCard19.src = twoDiamonds.replace('90x90', '225x225');
+        tempCard20.src = twoSpades.replace('90x90', '225x225');
 
 
 }
@@ -318,18 +331,8 @@ theCanvas.addEventListener("click",onMouseClick,false);
 theCanvas.width =   window.innerWidth-360
 theCanvas.height = window.innerHeight-300
 theCanvas.style.left =  window.innerHeight-(window.innerHeight-430) + "px"
+theCanvas.style.top = "20px"
 
-
-    //arrow x and y pos
-let leftArrowXpos = 50
-let rightArrowXpos = theCanvas.width-50
-let topArrowXpos =  theCanvas.width/2
-let bottomArrowXpos =theCanvas.width/2+40
-
-let leftArrowYpos =theCanvas.height-90
-let rightArrowYpos = theCanvas.height-120
-let topArrowYpos = 50
-let bottomArrowYpos = theCanvas.height-275
 
 
 
@@ -389,53 +392,6 @@ let bottomArrowYpos = theCanvas.height-275
 //console.log(e.clientX + " " + e.clientY)
 //
 
-    if (e.clientX  < 475 &&
-             e.clientX  >450 &&
-             e.clientY < 550 &&
-              e.clientY >  520){
-
-             console.log(" left arrow clicked")
-
-              //change images
-        tempCard1.src = jackClovers.replace('90x90', '225x225');
-
-
-          }
-
-          if (e.clientX  < 725 &&
-             e.clientX  >695 &&
-             e.clientY <555 &&
-              e.clientY > 523){
-             console.log(" right arrow clicked")
-
-              //change images
-        tempCard2.src = jackDiamonds.replace('90x90', '225x225');
-
-          }
-
-         if (e.clientX  < 493 &&
-             e.clientX  >460 &&
-             e.clientY < 445 &&
-              e.clientY >  413){
-
-             console.log(" bottom arrow clicked")
-
-              //change images
-        tempCard3.src = jackSpades.replace('90x90', '225x225');
-
-
-          }
-
-          if (e.clientX  < 485 &&
-             e.clientX  >455 &&
-             e.clientY <66 &&
-              e.clientY > 34){
-             console.log(" top arrow clicked")
-
-              //change images
-        tempCard4.src = jackDiamonds.replace('90x90', '225x225');
-
-          }
 
         }
 
@@ -474,19 +430,27 @@ let bottomArrowYpos = theCanvas.height-275
 
    // draw table background
     context.fillStyle = '#186110';
-    context.fillRect(0,0,theCanvas.width,theCanvas.height-225);
+    context.fillRect(0,0,theCanvas.width,260);
     context.strokeStyle = '#000000';
-    context.strokeRect(0,0,theCanvas.width,theCanvas.height-225);
+    context.strokeRect(0,0,theCanvas.width,260);
     //player and other players card placements (table)
-     context.strokeRect(5,55,theCanvas.width/3,theCanvas.height/2);
-       context.strokeRect(theCanvas.width/3+15,55,theCanvas.width/3,theCanvas.height/2);
-       context.strokeRect(theCanvas.width/3*2+25,55,theCanvas.width/3,theCanvas.height/2);
+     context.strokeRect(5,5,theCanvas.width/3,250);
+       context.strokeRect(theCanvas.width/3+15,5,theCanvas.width/3,250);
+       context.strokeRect(theCanvas.width/3*2+25,5,theCanvas.width/3,250);
 
      // draw players cards background
     context.fillStyle = '#305fb0';
-        context.fillRect(0,theCanvas.height-210,theCanvas.width,theCanvas.height-450);
+        context.fillRect(0,505,theCanvas.width,220);
+
+//players table placements
+    context.fillStyle = '#ff0000';
+          context.fillRect(0,275,theCanvas.width,220); 
+
+  //outline tables 
     context.strokeStyle = '#000000';
-  context.strokeRect(0,theCanvas.height-210,theCanvas.width,theCanvas.height-430);
+  context.strokeRect(0,505,theCanvas.width,220);
+
+  context.strokeRect(0,275,theCanvas.width,220); 
 
 
 
@@ -495,43 +459,45 @@ let bottomArrowYpos = theCanvas.height-275
       context.fillStyle = '#000000';
       context.font = '30px sans-serif';
       context.textBaseline = 'top';
-      context.fillText  ("playerName", 10, 60);
-       context.fillText  ("playerName", theCanvas.width/3+20, 60);
-        context.fillText  ("playerName", theCanvas.width/3*2+30, 60);
+      context.fillText  ("playerName", 10, 10);
+      context.fillText  ("playerName", theCanvas.width/3+20, 10);
+      context.fillText  ("playerName", theCanvas.width/3*2+30, 10);
+      context.fillText  ("Table", 10, 280);
+
     }
 
-    //arrow buttons stuff
 
-               drawTriangle(leftArrowXpos,leftArrowYpos,0,-0.4,-0.4); //leeft arrow players hands canvas
-            drawTriangle(rightArrowXpos,rightArrowYpos,0,0.4,0.4); //right arrow players hands canvas
-            drawTriangle(topArrowXpos,topArrowYpos,1.55,-0.4,-0.4); //top arrow table canvas
-         drawTriangle(bottomArrowXpos,bottomArrowYpos,11,-0.4,-0.4);//right arrow
 
 //175 px difference for cards x pos //card holder for players hand
-              context.drawImage(tempCard1,75,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
-              context.drawImage(tempCard2,theCanvas.height-420,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
-                context.drawImage(tempCard3,theCanvas.height-245,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
-                  context.drawImage(tempCard4,theCanvas.height-70,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
-             context.drawImage(tempCard5,theCanvas.height+105,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
-          context.drawImage(tempCard6,theCanvas.height+280,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
-                context.drawImage(tempCard7,theCanvas.height+455,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
-                  context.drawImage(tempCard8,theCanvas.height+630,theCanvas.height-205, theCanvas.height-520, theCanvas.height-470)
 
-//players own card placement (left on table)
-                        context.drawImage(tempCard9,10,130,theCanvas.height-520,  theCanvas.height-470)
-          context.drawImage(tempCard10,185,130, theCanvas.height-520, theCanvas.height-470)
-               context.drawImage(tempCard11,360,130, theCanvas.height-520, theCanvas.height-470)
+      context.drawImage(tempCard1,75,510,150,200)
+      context.drawImage(tempCard2,250,510,150,200)
+      context.drawImage(tempCard3,425,510,150,200)
+      context.drawImage(tempCard4,600,510,150,200)
+      context.drawImage(tempCard5,775,510,150,200)
+      context.drawImage(tempCard6,950,510,150,200)
+      context.drawImage(tempCard7,1125,510,150,200)
+      context.drawImage(tempCard8,1300,510,150,200)
+
+//other player card placements (left on table)
+         context.drawImage(tempCard9,10,50,150,  200)
+         context.drawImage(tempCard10,185,50, 150, 200)
+        context.drawImage(tempCard11,360,50, 150,200)
 
 //other player card placement (middle on table)
- context.drawImage(tempCard12,545,130,theCanvas.height-520,  theCanvas.height-470)
-          context.drawImage(tempCard13,720,130, theCanvas.height-520, theCanvas.height-470)
-               context.drawImage(tempCard14,895,130, theCanvas.height-520, theCanvas.height-470)
+        context.drawImage(tempCard12,545,50, 150, 200)
+        context.drawImage(tempCard13,720,50, 150, 200)
+        context.drawImage(tempCard14,895,50, 150, 200)
 
-               //other player card placement (right on table)
- context.drawImage(tempCard15,1080,130,theCanvas.height-520,  theCanvas.height-470)
-       context.drawImage(tempCard16,1240,130, theCanvas.height-520, theCanvas.height-470)
-               context.drawImage(tempCard17,1400,130, theCanvas.height-520, theCanvas.height-470)
+  //other player card placement (right on table)
+       context.drawImage(tempCard15,1080,50, 150, 200)
+       context.drawImage(tempCard16,1240,50, 150, 200)
+       context.drawImage(tempCard17,1400,50, 150, 200)
 
+//players own placements table
+        context.drawImage(tempCard18,545,285, 150, 200)
+        context.drawImage(tempCard19,720,285, 150, 200)
+        context.drawImage(tempCard20,895,285, 150, 200)
 
     context.restore();
 
