@@ -19,17 +19,15 @@ class Deck {
 const deck1 = new Deck();
 console.log(deck1.deck);
 
-shuffle() {
-    const { deck } = this;
-    let m = deck.length, i;
-  
-    while (m) {
-      i = Math.floor(Math.random() * m--);
-  
-      [deck[m], deck[i]] = [deck[i], deck[m]];
-    }
-  
-    return this;
-  };
-  
- 
+// shuffle() {
+//     const { deck } = this;
+//     let m = deck.length, i;
+//
+//     while (m) {
+//       i = Math.floor(Math.random() * m--);
+//
+//       [deck[m], deck[i]] = [deck[i], deck[m]];
+//     }
+//
+//     return this;
+//   }

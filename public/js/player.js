@@ -1,60 +1,63 @@
 // client js
-//let pileNames = [];
+let myHand = [];
 let id = 1;
+let realId = 0;
 function SendMessage(){
     let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value );
     $.post("/chat", {line:chat},function(data){
       document.getElementById("sendMessage").value = "";
     });
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+function DrawCard(){
+    console.log("draw");
+    $.get("/drawcard", {num:1,id:realId},function(data){
+    });
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+function ToTable(){
+    console.log("table");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+function Discard(){
+    console.log("discard");
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function sucessInfo(data){
     if(!data)
         return;
     id = data.id;
-    //pileNames.length = 0;
-    // for(let i = 0; i< data.pilenames.length; i++){
-    //     pileNames[i] = data.pilenames[i];
-    // }
+    realId = data.id - 1;
     document.getElementById("nameset").value = "Player " + id;
     document.getElementById("playerId").innerHTML = "PLAYER " + id;
     document.getElementById("gameName").innerHTML = data.gamename;
+    myHand = data.hand;
+    console.log(myHand);
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function(){
     console.log("player ready");
     $.get("/player2", {index:1,id:id},sucessInfo);
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('beforeunload',function () {
-    $.get("/checkplayer", {active:0,id:id},null);
+    $.get("/checkplayer", {active:0,id:realId},null);
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 playerCheck();
 function playerCheck() {
-    $.get("/checkplayer", {active:1,id:id},function(data){
+    $.get("/checkplayer", {active:1,id:realId,playername:$("#nameset").val()},function(data){
         document.getElementById("gameName").innerHTML = data.gamename;
         document.getElementById("chatbox").innerHTML = "";
         for(let i = 0; i < data.chat.length;i++){
             document.getElementById("chatbox").innerHTML +=  data.chat[i] + "\n";
         }
-        ////////////////////////////////////////////////////
-        // $(".pileButton").remove(); // clears buttons
-        // pileNames.length = 0;
-        // for(let i = 0; i< data.pilenames.length; i++){
-        //     pileNames[i] = data.pilenames[i];
-        //     $('#pileButtons').append('<br class="pileButton"><input type ="button" class="pileButton" id = "" onClick = "SendTo(this)">');
-        // }
-        // let x = 0;
-        // $('.pileButton').each(function(){
-        //     if($(this).is("input")){
-        //         $(this).val("Send To " + pileNames[x]);
-        //         $(this).attr( 'id',x.toString());
-        //         x++;
-        //     }
-        // });
-        ////////////////////////////////////////////////////
+        // update card hand here
     });
     let numMilliSeconds = 500;
     setTimeout(playerCheck, numMilliSeconds);
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 //queen cards
   let queenHearts =  "https://th.bing.com/th/id/R15e43a712ac44407d23c437b0a5b43bc?rik=owXOaoa1K9k1hw&riu=http%3a%2f%2fwww.madore.org%2f%7edavid%2fimages%2fcards%2fenglish%2fqueen-hearts.png&ehk=ObI7ptH3rqsbSRCMH%2baABEIOJXiXCpxbYjPJ%2bfvyigs%3d&risl=&pid=ImgRaw"
 
@@ -249,7 +252,7 @@ let tenHearts =  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/10_o
     let tempCard17 = new Image()
   tempCard17.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
 
-  //players table 
+  //players table
  let tempCard18 = new Image()
   tempCard18.src  =  "https://www.clker.com/cliparts/x/u/9/2/j/G/transparent-square-th.png"
 
@@ -444,13 +447,13 @@ theCanvas.style.top = "20px"
 
 //players table placements
     context.fillStyle = '#ff0000';
-          context.fillRect(0,275,theCanvas.width,220); 
+          context.fillRect(0,275,theCanvas.width,220);
 
-  //outline tables 
+  //outline tables
     context.strokeStyle = '#000000';
   context.strokeRect(0,505,theCanvas.width,220);
 
-  context.strokeRect(0,275,theCanvas.width,220); 
+  context.strokeRect(0,275,theCanvas.width,220);
 
 
 
@@ -535,7 +538,4 @@ function drawTriangle( xpos, ypos,rot, xscale,yscale)
 
    }
 ////////////////////////////////////////////////////////
-
-
-
 }

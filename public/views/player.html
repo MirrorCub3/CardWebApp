@@ -9,14 +9,14 @@
   <body>
     <header>
       <h1 id = "playerId">PLAYER</h1>
-      <h3 id = "gameName">Virutal Card Deck</h3>
+      <h3 id = "gameName">Virtual Cards</h3>
     </header>
       <section id="box">
       <div>
 
           <fieldset >
           <label>Username:</label>
-          <input id="nameset" type="text">
+          <input id="nameset" type="text" maxlength="25">
           <br>
           <label>Chat:</label>
           <br>
@@ -32,17 +32,14 @@
     </section>
     <section id="box">
         <fieldset >
-          <legend>Send To Buttons</legend>
               <div id = "pileButtons">
-                  <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table" ><br>
-                  <input id="mainPile" type= "button" value="Draw Card" title= "Draw one card">
-                  <input id="discard" type= "button" value="Discard" title= "Send Card to the Discad Pile">
+                  <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table" onClick = "ToTable()" ><br>
+                  <input id="main" type= "button" value="Draw Card" title= "Draw one card" onClick = "DrawCard()"><br>
+                  <input id="discard" type= "button" value="Discard" title= "Discard Currently Selected Card" onClick = "Discard()">
               </div>
         </fieldset>
   </section>
-       <canvas id="canvas"  style="position:absolute; ">
- Your browser does not support HTML5 Canvas.
-</canvas>
+       <canvas id="canvas"  style="position:absolute; "> Your browser does not support HTML5 Canvas.</canvas>
       <script src="js/player.js"></script>
   </body>
 </html>

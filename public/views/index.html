@@ -23,10 +23,10 @@
             <legend>Player Settings</legend>
                 <div id = "Player">
                     <label for="playernum">Number of Players:</label>
-                    <input id="playernum" type="number" name="playernum" min = "1" max = "4" step = "1" title = "Max 4 players"><br>
+                    <input id="playernum" type="number" name="playernum" min = "1" max = "4" step = "1" value = "1" title = "Max 4 players"><br>
 
                     <label for="hand">Starting Hand:</label>
-                    <input id="hand" type="number" name="hand" min = "1" step = "1" title = "The amount of cards each player starts with"><br>
+                    <input id="hand" type="number" name="hand" min = "0" max = "52" step = "1" value = "0" title = "The amount of cards each player starts with"><br>
                 </div>
             </fieldset>
             </section>
@@ -36,15 +36,9 @@
             <legend>Game Settings</legend>
                 <div id = "Game">
                     <label for = "name"> Game Name:</label>
-                    <input id = "name" type = "text" name = "name" maxlength="25" title = "Limit 25 characters"> <br>
-
-                    <!--<div id = "Pile">
-                        <label for="pilenum">Number of Piles:</label>
-                        <input id="pilenum" type="number" name="pilenum" min = "0" max = "10" step = "1" title = "Max 10"/>
-                        <input id="makePile" type="button" value="Create Piles" title = "Create piles to send cards to"/>
-                        <br>
-                    </div>
-                  -->
+                    <input id = "name" type = "text" name = "name" maxlength="25" value = "Virtual Cards" title = "Limit 25 characters">
+                    <input id = "updateButton" type="button" value="Update Name" title= "Update and refresh current game name">
+                    <br>
                 </div>
             </fieldset>
             <br>
@@ -53,84 +47,62 @@
             <br>
             <input type="reset" name="reset" value="Reset">
             <input id = "CreateGameButton" type="button" value="Create Game" title= "Start new game - this will clear any previous game history">
-            <input id = "updateButton" type="button" value="Update Name" title= "Update and refresh current game name">
             <input id = "end" type="button" value="End Game" title= "End the urrent Running Game">
         </section>
         </form>
 
         <script>
-            // let pileNames = [];
             function SetGame(){
-                // pileNames.length = 0; // clear list
-                // $('.pile').each(function(){
-                    // if($(this).is("input")){
-                        // pileNames[pileNames.length] = $(this).val();
-                    // }
-                // });
-                //$.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
                 $.post("/create", {playernum:$("#playernum").val(), handnum:$("#hand").val(), name:$("#name").val()},success);
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function UpdateGame(){
-                // pileNames.length = 0; // clear list
-                // $('.pile').each(function(){
-                //     if($(this).is("input")){
-                //         pileNames[pileNames.length] = $(this).val();
-                //     }
-                // });
-                //$.post("/update", {name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
-                $.post("/update", {name:$("#name").val()},success);
-            }
-            function EndGame(){
-                // pileNames.length = 0; // clear list
-                // $('.pile').each(function(){
-                //     if($(this).is("input")){
-                //         pileNames[pileNames.length] = $(this).val();
-                //     }
-                // });
-                //$.post("/update", {name:$("#name").val(), pilenum:$("#pilenum").val(),pilenames:pileNames},success);
                 $.post("/update", {name:$("#name").val()},success);
             }
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // function CreatePile(){
-            //     $(".pile").remove(); // clear existing
-            //     for(let i = 0; i < $("#pilenum").val();i++){
-            //         $('#Pile').append('<br class="pile"><label class="pile"> Pile Name </label> <input type ="text" class="pile" minlength = "1" maxlength = "20">');
-            //     }
-            //     console.log("Piles Created");
-            // }
+            function EndGame(){
+                $.get("/end",success);
+            }
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function success(data) {
-                if (data.error == 1){
-                  alert("Invalid Starting Hand");
-                }
-                else if (data.error == 0){
-                  alert("Game Created!");
-                }
-                else if (data.error == 2){
-                  alert("No Current Game");
-                }
-                else if (data.error == 3){
-                  alert("Current Game Updated");
-                }
-                else if (data.error == 4){
-                  alert("Text Inputs Can Only Include Letters And Numbers");
+                switch(data.error) {
+                    case 0: alert("Game Created!");;break;
+                    case 1: alert("Invalid Starting Hand");break;
+                    case 2: alert("No Current Game");break;
+                    case 3: alert("Name Updated");break;
+                    case 4: alert("Text Inputs Can Only Include Letters And Numbers");break;
+                    case 5: alert("Game Ended");break;
+                    case 6: alert("Bad Create: Game In Progress");break;
                 }
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             check();
             function check() {
-                $.get("/indexCheck", checkSuccess);
+                $.get("/indexCheck",{playernum:parseInt($("#playernum").val())}, checkSuccess);
                 let numMilliSeconds = 1000;
                 setTimeout(check, numMilliSeconds);
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             function checkSuccess(data){
                 document.getElementById("numPlayers").innerHTML = "Active Players: " + data.active;
+                $("#hand").attr( 'max',data.maxhand);
+                if($("#hand").val() > data.maxhand){
+                    $("#hand").val(data.maxhand)
+                }
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
             $(document).ready(function(){
                 console.log("ready");
                 $("#CreateGameButton").click(SetGame);
                 $("#updateButton").click(UpdateGame);
-                $("#end").click(Endgame);
-                //$("#makePile").click(CreatePile);
+                $("#end").click(EndGame);
+                $.get("/start",function(data){
+                    if(!data)
+                        return;
+                    $("#playernum").val(data.playernum);
+                    $("#hand").val(data.handnum);
+                    $("#name").val(data.gamename);
+                });
             });
         </script>
     </body>
