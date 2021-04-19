@@ -225,7 +225,16 @@ app.post("/totable",function(req,res) {
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/discard",function(req,res) {
-
+    if(!req.body.card)
+        return
+    let id = parseInt(req.body.id);
+    let card = req.body.card;
+    let index = myDeck.FindIndex(card,playerList[id].hand);
+    console.log(index);
+    if(index != -1){
+        playerList[id].hand.splice(index, 1);
+    }
+    res.json({hand:playerList[id].hand});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function validString(string) {

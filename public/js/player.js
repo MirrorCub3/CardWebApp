@@ -25,7 +25,16 @@ function ToTable(){
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Discard(){
-    console.log("discard");
+    //////////////code here to determine card selected
+    let card = null;
+    card = myHand[0];
+    $.post("/discard", {id:realId,card:card},function(data){
+        if(!data)
+          return;
+        myHand = data.hand;
+        console.log("discard success");
+        console.log(myHand);
+    });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function sucessInfo(data){
