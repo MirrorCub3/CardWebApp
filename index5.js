@@ -97,8 +97,30 @@ app.post("/create",function(req,res) {
     playerSetNum = req.body.playernum;
 
     playerList.length = playerSetNum;
+<<<<<<< Updated upstream
     for(let i = 0; i<playerList.length; i++){
         playerList[i] = false;
+=======
+    handNum = req.body.handnum;
+    for(let i = 0; i< playerSetNum; i++){
+        let hand = []; hand.length = 0;
+        playerList[i] = new Player(i);
+        playerList[i].name = "";
+        if(handNum !=0){
+            for(let x = 0; x < handNum ;x++){
+                hand[x] = myDeck.Draw(); //calling a method in the cards.js class
+            }
+            for(let card in hand){
+                if(hand[card] == null){
+                    hand.splice(card, 1); // removing null cards
+                }
+            }
+            playerList[i].hand = hand;
+        }
+        else{
+            playerList[i].hand = hand;
+        }
+>>>>>>> Stashed changes
     }
     handNum = req.body.handnum;
     //clears chat
@@ -159,6 +181,26 @@ app.post("/chat",function(req,res) {
     res.json({chat:chat});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+<<<<<<< Updated upstream
+=======
+app.post("/totable",function(req,res) {
+
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.post("/discard",function(req,res) {
+    if(!req.body.card)
+        return
+    let id = parseInt(req.body.id);
+    let card = req.body.card;
+    let index = playerList[id].hand.FindIndex(card,playerList[id].hand);
+    console.log(index);
+    if(index != -1){
+        playerList[id].hand.splice(index, 1);
+    }
+    res.json({hand:playerList[id].hand});
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> Stashed changes
 function validString(string) {
     let regex =  /^[A-Za-z0-9 ]*[A-Za-z0-9 ]*$/;
     let  validString = regex.test(string);
