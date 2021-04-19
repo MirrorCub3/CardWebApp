@@ -447,6 +447,8 @@ theCanvas.style.top = "20px"
        context.strokeRect(theCanvas.width/3+15,5,theCanvas.width/3,250);
        context.strokeRect(theCanvas.width/3*2+25,5,theCanvas.width/3,250);
 
+
+
      // draw players cards background
     context.fillStyle = '#305fb0';
         context.fillRect(0,505,theCanvas.width,220);
@@ -479,18 +481,28 @@ theCanvas.style.top = "20px"
 
 
 
+
 //175 px difference for cards x pos //card holder for players hand
 
-      context.drawImage(tempCard1,75,510,150,200)
-      context.drawImage(tempCard2,250,510,150,200)
-      context.drawImage(tempCard3,425,510,150,200)
-      context.drawImage(tempCard4,600,510,150,200)
-      context.drawImage(tempCard5,775,510,150,200)
+      context.drawImage(tempCard1,110,510,150,200)
+      context.drawImage(tempCard2,285,510,150,200)
+      context.drawImage(tempCard3,460,510,150,200)
+
+      //yellow outline
+      context.lineWidth = 10
+             context.strokeStyle = '#f5e342';
+             context.strokeRect(720,510,150,200)
+      //this postision is the wit the yellow box
+      context.drawImage(tempCard4,720,510,150,200)
+
+
+//      context.drawImage(tempCard5,775,510,150,200)
       context.drawImage(tempCard6,950,510,150,200)
       context.drawImage(tempCard7,1125,510,150,200)
       context.drawImage(tempCard8,1300,510,150,200)
 
 //other player card placements (left on table)
+      context.lineWidth = 1
          context.drawImage(tempCard9,10,50,150,  200)
          context.drawImage(tempCard10,185,50, 150, 200)
         context.drawImage(tempCard11,360,50, 150,200)
@@ -509,6 +521,10 @@ theCanvas.style.top = "20px"
         context.drawImage(tempCard18,545,285, 150, 200)
         context.drawImage(tempCard19,720,285, 150, 200)
         context.drawImage(tempCard20,895,285, 150, 200)
+
+
+
+
 
     context.restore();
 
