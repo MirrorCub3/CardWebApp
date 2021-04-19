@@ -1,5 +1,5 @@
 body{
-    background: url(pkbg.png);
+    background-color:#1e910f;
     font-family: 'Courier New', Courier, monospace;
     font-style: oblique;
     font-variant: small-caps;
@@ -9,10 +9,11 @@ header {
     color: white;
 
     
-    background-image:url(sss.jpg);
+    background-color:#914214;
+
     font: 10px;
     border-style: outset;
-    border-color:#793185;
+    border:#14912b 5px outset;
     border-width: 5px;
     display: block;
     font-size: 2em;
@@ -25,22 +26,25 @@ header {
 }
 
 section#playersettings{
-    border:#793185 5px outset;
+    border:#14912b 5px outset;
 
     
 
-    background-image:url(sds.jpg);
+    background-color:#914214;
+
 }
 section#gamesettings{
-    border:#793185 5px outset;
+    border:#14912b 5px outset;
 
     
-    background-image:url(sds.jpg);
+    background-color:#914214;
+
 }
 section#submit{
-    border:#793185 5px outset;
+    border:#14912b 5px outset;
 
    
    
-    background-image:url(sds.jpg);
+    background-color:#914214;
+
 }
