@@ -2,6 +2,7 @@
 let myHand = [];
 let id = 1;
 let realId = 0;
+let others = [];
 function SendMessage(){
     let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value );
     $.post("/chat", {line:chat},function(data){
@@ -13,7 +14,6 @@ function DrawCard(){
     $.get("/drawcard", {num:1,id:realId},function(data){
         if(!data)
           return;
-        myHand.length = 0;
         myHand = data.cards;
         console.log("draw success");
         console.log(myHand);
@@ -41,7 +41,7 @@ function sucessInfo(data){
     console.log(myHand);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-$(document).ready(function(){
+$(window).load(function(){
     console.log("player ready");
     //$.get("/player2", {index:1,id:id},sucessInfo);
     $.get("/player2",sucessInfo);
@@ -54,6 +54,7 @@ window.addEventListener('beforeunload',function () {
 playerCheck();
 function playerCheck() {
     $.get("/checkplayer", {active:1,id:realId,playername:$("#nameset").val()},function(data){
+        others = data.others;
         //if(data.gameActive == false){  window.location.reload(true);}
         document.getElementById("gameName").innerHTML = data.gamename;
         document.getElementById("chatbox").innerHTML = "";
@@ -76,7 +77,6 @@ function playerCheck() {
     setTimeout(playerCheck, numMilliSeconds);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //queen cards
   let queenHearts =  "https://th.bing.com/th/id/R15e43a712ac44407d23c437b0a5b43bc?rik=owXOaoa1K9k1hw&riu=http%3a%2f%2fwww.madore.org%2f%7edavid%2fimages%2fcards%2fenglish%2fqueen-hearts.png&ehk=ObI7ptH3rqsbSRCMH%2baABEIOJXiXCpxbYjPJ%2bfvyigs%3d&risl=&pid=ImgRaw"
 
@@ -463,15 +463,17 @@ theCanvas.style.top = "20px"
 
 
 
-    {
+    if(others.length>0){
 // player name display
       context.fillStyle = '#000000';
       context.font = '30px sans-serif';
       context.textBaseline = 'top';
-      context.fillText  ("playerName", 10, 10);
-      context.fillText  ("playerName", theCanvas.width/3+20, 10);
-      context.fillText  ("playerName", theCanvas.width/3*2+30, 10);
-      context.fillText  ("Table", 10, 280);
+      context.fillText  (others[0].name, 10, 10);
+      if(others.length>1)
+      context.fillText  (others[1].name, theCanvas.width/3+20, 10);
+      if(others.length>2)
+      context.fillText  (others[2].name, theCanvas.width/3*2+30, 10);
+      context.fillText  ($("#nameset").val(), 10, 280);
 
     }
 

@@ -67,6 +67,7 @@ app.get("/indexCheck",function(req,res) {
             }
         }
         //console.log(numTrue);
+        //console.log(playerList);
         numActive = numTrue;
     }
     //////////////////////////////////////////////////
@@ -76,23 +77,34 @@ app.get("/indexCheck",function(req,res) {
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/checkplayer", function(req,res){
-    if(!gameActive)
+    if(!gameActive){
       return;
-    if(req.query.active == 0){
-      playerList[req.query.id].setActive(false); // player inactive
-      playerList[req.query.id].name = "empty";
-      if(req.query.id < openIndex){openIndex = req.query.id;}
-      // ///////////////// CODE THAT REMOVES PLAYER'S CARDS WHEN THEY LEAVE - UNTESTED
-      // myDeck.ReturnHand(playerList[req.query.id].hand);
-      // playerList[req.query.id].hand.length = 0;
-      // /////////////////
     }
-    else if(req.query.active == 1){
-      playerList[req.query.id].setActive(true); // player is active
-      playerList[req.query.id].name = req.query.playername;
-      res.json({gamename:gameName,chat:chat,empty:myDeck.CheckEmpty(),gameactive:gameActive});
+    let active = parseInt(req.query.active);
+    let id = parseInt(req.query.id);
+    if(active == 0){
+        playerList[id].setActive(false); // player inactive
+        numActive--;
+        //playerList[req.query.id].name = "empty";
+        if(id < openIndex){openIndex = id;}
+        // ///////////////// CODE THAT REMOVES PLAYER'S CARDS WHEN THEY LEAVE - UNTESTED
+        // myDeck.ReturnHand(playerList[req.query.id].hand);
+        // playerList[req.query.id].hand.length = 0;
+        // /////////////////
     }
-    console.log(req.query.id + " " + playerList[req.query.id].active);
+    else if(active == 1){
+        //playerList[id].setActive(true); // player is active
+        let otherPlayers = [];
+        otherPlayers.length = 0;
+        for(let x in playerList){
+            if(x != id){
+                otherPlayers[otherPlayers.length] = playerList[x];
+            }
+        }
+        playerList[id].name = req.query.playername;
+        res.json({gamename:gameName,chat:chat,empty:myDeck.CheckEmpty(),gameactive:gameActive,others:otherPlayers});
+    }
+    //console.log(req.query.id + " " + playerList[req.query.id].active);
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/end", function(req,res){
@@ -105,6 +117,7 @@ app.get("/end", function(req,res){
     numActive = 0;
     chat.length = 0;
     openIndex = 0;
+    console.log(playerList);
     playerList.length = 0;
     // for(let player in playerList){
     //     playerList[player].defaultState(player);
@@ -125,7 +138,7 @@ app.get("/drawcard",function(req,res) {
         if(cards[card] == null){
             cards.splice(card, 1); // removing null cards
         }
-        //console.log(cards);
+        console.log(cards);
         let myHand = playerList[req.query.id];
         myHand.hand[myHand.hand.length] = cards[card];
     }

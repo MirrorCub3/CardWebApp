@@ -7,12 +7,7 @@ body{
 .container{
     align-items: flex-start;
 }
-/*header.h3{
-    background-image: url(nihon.gif)repeat;
-    background-clip: border-box;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}*/
+
 header {
     /*background-image:url(tokyoo.gif);*/
     background-color:#000000;
@@ -36,16 +31,16 @@ div {
     display: block;
 
 }
-/*label{
-    border-bottom: double 2px cornflowerblue;
-}*/
+
 section{
     position: fixed;
+    bottom: 10px;
     border:#cc0000 5px outset;
     color:whitesmoke;
     float: left;
     font-size: 20px;
-    background-color:transparent;
+    /*background-color:transparent;*/
+    background-color: rgba(0, 0, 0, 0.3);
     display: block;
     margin-inline-start: 2px;
     margin-inline-end: 2px;
@@ -65,28 +60,15 @@ textarea{
     margin-inline-end: 2px;
 }
 
-
-/*label{
-    border-bottom: double 2px cornflowerblue;
-}*/
-/* why are there two of these identical section css?
-section{
-    border:#793185 5px outset;
-
-    float: left;
-
-    background-image:url(sds.jpg);
-    display: block;
-    margin-inline-start: 2px;
-    margin-inline-end: 2px;
-    padding-block-start: 0.35em;
-    padding-inline-start: 0.75em;
-    padding-inline-end: 0.75em;
-    padding-block-end: 0.625em;
-    min-inline-size: min-content;
-
-
-}*/
+.overlay {
+    background-color: rgba(0, 0, 0, .3);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    top: 0px;
+    left: 0px;
+}
 section#carrddeck{
     border:#793185 5px outset;
     background-image:url(nihon.gif);

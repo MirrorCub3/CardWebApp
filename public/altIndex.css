@@ -24,7 +24,7 @@ section{
     font-size: 20px;
     color:whitesmoke;
     border:#cc0000 5px outset;
-    background-color:#000000;
+    background-color: rgba(0, 0, 0, 0.3);
     padding-block-start: 0.35em;
     padding-inline-start: 0.75em;
     padding-inline-end: 0.75em;
