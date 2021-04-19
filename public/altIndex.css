@@ -1,0 +1,34 @@
+body{
+    background: url(back.jpg);
+    font-family: 'Courier New', Courier, monospace;
+    font-style: oblique;
+    font-variant: small-caps;
+}
+
+header {
+    background-color:#000000;
+    color:whitesmoke;
+    font: 10px;
+    border:#cc0000 5px outset;
+    display: block;
+    font-size: 2em;
+    line-height: .5em;
+    margin-block-start: 0.67em;
+    margin-block-end: 0.67em;
+    margin-inline-start: 0px;
+    padding-inline-start: 0.5em;
+    resize:none;
+}
+
+section{
+    font-size: 20px;
+    color:whitesmoke;
+    border:#cc0000 5px outset;
+    background-color:#000000;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    width: 500px;
+
+}

@@ -46,21 +46,27 @@ app.get("/player",function(req,res) {
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/player2",function(req,res) { // called when player doc loads
-      if(openIndex >= playerList.length)
-          return;
-      playerList[openIndex].active = true;
+      if(openIndex >= playerList.length){
+        res.end("Error! Player Count Exceeded");
+        return;
+      }
+      playerList[openIndex].setActive(true);
       //console.log(playerList[openIndex].hand);
       res.json({id:playerList[openIndex].id,realid:playerList[openIndex].realId,gamename:gameName,hand:playerList[openIndex].hand});
       openIndex++;
+      //console.log(openIndex);
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/indexCheck",function(req,res) {
+    numActive = 0;
     if(gameActive){
         let numTrue = 0;
         for(let player in playerList){
-            if(playerList[player].active == true)
-                numTrue += 1;
+            if(playerList[player].active){
+                numTrue++;
+            }
         }
+        //console.log(numTrue);
         numActive = numTrue;
     }
     //////////////////////////////////////////////////
@@ -73,20 +79,20 @@ app.get("/checkplayer", function(req,res){
     if(!gameActive)
       return;
     if(req.query.active == 0){
-      playerList[req.query.id].active = false; // player inactive
+      playerList[req.query.id].setActive(false); // player inactive
       playerList[req.query.id].name = "empty";
-      if(req.query.id < openIndex)
-          openIndex = req.query.id;
+      if(req.query.id < openIndex){openIndex = req.query.id;}
       // ///////////////// CODE THAT REMOVES PLAYER'S CARDS WHEN THEY LEAVE - UNTESTED
       // myDeck.ReturnHand(playerList[req.query.id].hand);
       // playerList[req.query.id].hand.length = 0;
       // /////////////////
     }
     else if(req.query.active == 1){
-      playerList[req.query.id].active = true; // player is active
+      playerList[req.query.id].setActive(true); // player is active
       playerList[req.query.id].name = req.query.playername;
       res.json({gamename:gameName,chat:chat,empty:myDeck.CheckEmpty(),gameactive:gameActive});
     }
+    console.log(req.query.id + " " + playerList[req.query.id].active);
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/end", function(req,res){
@@ -98,9 +104,11 @@ app.get("/end", function(req,res){
     gameActive = false;
     numActive = 0;
     chat.length = 0;
-    for(let player in playerList){
-        playerList[player].defaultState(player);
-    }
+    openIndex = 0;
+    playerList.length = 0;
+    // for(let player in playerList){
+    //     playerList[player].defaultState(player);
+    // }
     res.json({error:5});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,7 +125,7 @@ app.get("/drawcard",function(req,res) {
         if(cards[card] == null){
             cards.splice(card, 1); // removing null cards
         }
-        console.log(cards);
+        //console.log(cards);
         let myHand = playerList[req.query.id];
         myHand.hand[myHand.hand.length] = cards[card];
     }
@@ -138,6 +146,7 @@ app.post("/create",function(req,res) {
       return;
     }
     //////////////////////////////////////
+    openIndex = 0;
     gameActive = true;
     myDeck = new Deck();
     myDeck.shuffle();

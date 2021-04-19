@@ -31,8 +31,9 @@ function Discard(){
 function sucessInfo(data){
     if(!data)
         return;
-    id = data.id;
-    realId = data.realid;
+    id = parseInt(data.id);
+    realId = parseInt(data.realid);
+    console.log(id + " " + realId);
     document.getElementById("nameset").value = "Player " + id;
     document.getElementById("playerId").innerHTML = "PLAYER " + id;
     document.getElementById("gameName").innerHTML = data.gamename;
@@ -53,8 +54,7 @@ window.addEventListener('beforeunload',function () {
 playerCheck();
 function playerCheck() {
     $.get("/checkplayer", {active:1,id:realId,playername:$("#nameset").val()},function(data){
-        if(data.gameActive == false){  window.location.reload(true);
-        }
+        //if(data.gameActive == false){  window.location.reload(true);}
         document.getElementById("gameName").innerHTML = data.gamename;
         document.getElementById("chatbox").innerHTML = "";
         for(let i = 0; i < data.chat.length;i++){
@@ -76,7 +76,7 @@ function playerCheck() {
     setTimeout(playerCheck, numMilliSeconds);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
+
 //queen cards
   let queenHearts =  "https://th.bing.com/th/id/R15e43a712ac44407d23c437b0a5b43bc?rik=owXOaoa1K9k1hw&riu=http%3a%2f%2fwww.madore.org%2f%7edavid%2fimages%2fcards%2fenglish%2fqueen-hearts.png&ehk=ObI7ptH3rqsbSRCMH%2baABEIOJXiXCpxbYjPJ%2bfvyigs%3d&risl=&pid=ImgRaw"
 
@@ -545,4 +545,3 @@ function drawTriangle( xpos, ypos,rot, xscale,yscale)
    }
 ////////////////////////////////////////////////////////
 }
-*/

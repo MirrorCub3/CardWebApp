@@ -1,5 +1,5 @@
 body{
-    background: url(pkbg.png);
+    background: url(back.jpg);
     font-family: 'Courier New', Courier, monospace;
     font-style: italic;
     font-variant: small-caps;
@@ -7,26 +7,28 @@ body{
 .container{
     align-items: flex-start;
 }
-header.h3{
+/*header.h3{
     background-image: url(nihon.gif)repeat;
     background-clip: border-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-}
+}*/
 header {
-    background-image:url(tokyoo.gif);
+    /*background-image:url(tokyoo.gif);*/
+    background-color:#000000;
+    color:whitesmoke;
     font: 10px;
-    width: 400px;
+    width: 350px;
     border-style: outset;
-    border-color:#793185;
+    border-color:#cc0000;
     border-width: 5px;
     display: block;
     font-size: 2em;
-    margin-right: 100px;
+    line-height: .5em;
     margin-block-start: 0.67em;
     margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-
+    margin-inline-start: 2px;
+    padding-inline-start: 0.75em;
     resize:none;
 
 }
@@ -34,15 +36,16 @@ div {
     display: block;
 
 }
-label{
+/*label{
     border-bottom: double 2px cornflowerblue;
-}
+}*/
 section{
-    border:#793185 5px outset;
-
+    position: fixed;
+    border:#cc0000 5px outset;
+    color:whitesmoke;
     float: left;
-
-    background-image:url(sds.jpg);
+    font-size: 20px;
+    background-color:transparent;
     display: block;
     margin-inline-start: 2px;
     margin-inline-end: 2px;
@@ -56,16 +59,17 @@ section{
 }
 
 textarea{
-
     color:whitesmoke;
-    border:#793185 5px outset;
-    background-image: url(sss.jpg);
+    border:#cc0000 5px outset;
+    background-color:#000000;
+    margin-inline-end: 2px;
 }
 
 
-label{
+/*label{
     border-bottom: double 2px cornflowerblue;
-}
+}*/
+/* why are there two of these identical section css?
 section{
     border:#793185 5px outset;
 
@@ -82,7 +86,7 @@ section{
     min-inline-size: min-content;
 
 
-}
+}*/
 section#carrddeck{
     border:#793185 5px outset;
     background-image:url(nihon.gif);
@@ -90,5 +94,6 @@ section#carrddeck{
 }
 canvas{
     align-items: flex-start;
+    position: static;
     float:left;
 }
