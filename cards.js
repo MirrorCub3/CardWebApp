@@ -74,10 +74,10 @@ module.exports = class Deck {
           "https://upload.wikimedia.org/wikipedia/commons/3/39/Cardset1-ck.jpg",
           "https://th.bing.com/th/id/OIP._ChT7o4G-SsSV5zk5tJUygHaKA?pid=ImgDet&rs=1"
         ];
-
         for (let suite in suites) {
             for (let value in values) {
-                this.deck.push(new Card(values[value],suites[suite])); // array of card objects
+                this.deck.push(new Card(values[value],suites[suite],images[this.imageId])); // array of card objects
+                this.imageId++;
             }
         }
     }
@@ -137,9 +137,10 @@ module.exports = class Deck {
    }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-function Card (value,suite) {
+function Card (value,suite,image) {
     this.value = value;
     this.suite = suite;
+    this.image = image;
 }
 function NewSpot(array){
     return Math.floor(Math.random() * array.length);
