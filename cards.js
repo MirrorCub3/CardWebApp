@@ -99,11 +99,27 @@ module.exports = class Deck {
     }
     Discard(card){
       this.discard[this.discard.length] = card;
+      console.log("==============================");
+      console.log(this.discard);
       //////////////////!!!!!NEEDS TO BE TESTED
-      // if(this.discard.length == 52){ // if the discard pile has all the cards, return to the main deck and reshuffle
-      //     this.deck = this.discard;
-      //     this.shuffle();
-      // }
+      if(this.CheckEmpty()){ // f main is empty, shuffle discard back to main
+          for(let id1 = 0; id1 < this.discard.length; id1++){
+              for(let id2 = id1 + 1; id2 < this.discard.length; id2++){
+                  if(this.discard[id1].value == this.discard[id2].value &&
+                     this.discard[id1].suite == this.discard[id2].suite){
+                        this.discard[id1] == null;
+                  }
+              }
+          }
+          for(let cur in this.discard){
+              if(this.discard[cur] == null){
+                  this.deck.splice(cur, 1);
+              }
+          }
+          this.deck = this.discard;
+          this.discard.length = 0;
+          this.shuffle();
+      }
     }
     Draw(){
         if(this.deck.length > 0){
@@ -129,11 +145,13 @@ module.exports = class Deck {
         }
         //$('input').prop('readonly',true);
     }
-    FindIndex(targetCard, hand){
+    FindIndex(targetCard,hand){
      for (let card in hand){
-         if(targetCard == hand[card])
-             return (card);
+         if(targetCard.value == hand[card].value && targetCard.suite == hand[card].suite){
+             return(card);
+         }
      }
+     return(-1);
    }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

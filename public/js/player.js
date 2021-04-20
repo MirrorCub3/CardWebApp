@@ -3,6 +3,10 @@ let myHand = [];
 let id = 1;
 let realId = 0;
 let others = [];
+
+let shownHand = [];
+let showId = 0;
+let tableHand = [];
 function SendMessage(){
     let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value );
     $.post("/chat", {line:chat},function(data){
@@ -17,6 +21,19 @@ function DrawCard(){
         myHand = data.cards;
         console.log("draw success");
         console.log(myHand);
+
+        let x = showId;
+        shownHand.length = 0;
+        while(shownHand.length < 7){
+            if(x < myHand.length){
+                shownHand[shownHand.length] = myHand[x];
+                x++;
+            }
+            else{
+                shownHand[shownHand.length] = null;
+            }
+        }
+        console.log(shownHand);
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,6 +43,8 @@ function ToTable(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Discard(){
     //////////////code here to determine card selected
+    if(myHand.length ==0)
+        return;
     let card = null;
     card = myHand[0];
     $.post("/discard", {id:realId,card:card},function(data){
@@ -34,6 +53,19 @@ function Discard(){
         myHand = data.hand;
         console.log("discard success");
         console.log(myHand);
+
+        let x = showId;
+        shownHand.length = 0;
+        while(shownHand.length < 7){
+            if(x < myHand.length){
+                shownHand[shownHand.length] = myHand[x];
+                x++;
+            }
+            else{
+                shownHand[shownHand.length] = null;
+            }
+        }
+        console.log(shownHand);
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +80,18 @@ function sucessInfo(data){
     document.getElementById("gameName").innerHTML = data.gamename;
     myHand = data.hand;
     console.log(myHand);
+
+    let x = showId;
+    while(shownHand.length < 7){
+        if(x < myHand.length){
+            shownHand[shownHand.length] = myHand[x];
+            x++;
+        }
+        else{
+            shownHand[shownHand.length] = null;
+        }
+    }
+    console.log(shownHand);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(window).load(function(){
