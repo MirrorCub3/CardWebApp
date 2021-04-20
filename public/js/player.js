@@ -461,6 +461,11 @@ theCanvas.style.top = "20px"
      // draw players cards background
     context.fillStyle = '#305fb0';
         context.fillRect(0,505,theCanvas.width,220);
+        context.fillStyle = '#1fd14f';
+        context.fillRect(0,505,50,220)
+        context.fillStyle = '#1fd14f';
+        context.fillRect(1500,505,50,220)
+
 
 //players table placements
     context.fillStyle = '#ff0000';
