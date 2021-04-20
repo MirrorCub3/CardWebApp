@@ -3,6 +3,10 @@ let myHand = [];
 let id = 1;
 let realId = 0;
 let others = [];
+
+let shownHand = [];
+let showId = 0;
+let tableHand = [];
 function SendMessage(){
     let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value );
     $.post("/chat", {line:chat},function(data){
@@ -17,6 +21,19 @@ function DrawCard(){
         myHand = data.cards;
         console.log("draw success");
         console.log(myHand);
+
+        let x = showId;
+        shownHand.length = 0;
+        while(shownHand.length < 7){
+            if(x < myHand.length){
+                shownHand[shownHand.length] = myHand[x];
+                x++;
+            }
+            else{
+                shownHand[shownHand.length] = null;
+            }
+        }
+        console.log(shownHand);
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,6 +43,8 @@ function ToTable(){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Discard(){
     //////////////code here to determine card selected
+    if(myHand.length ==0)
+        return;
     let card = null;
     card = myHand[0];
     $.post("/discard", {id:realId,card:card},function(data){
@@ -34,6 +53,19 @@ function Discard(){
         myHand = data.hand;
         console.log("discard success");
         console.log(myHand);
+
+        let x = showId;
+        shownHand.length = 0;
+        while(shownHand.length < 7){
+            if(x < myHand.length){
+                shownHand[shownHand.length] = myHand[x];
+                x++;
+            }
+            else{
+                shownHand[shownHand.length] = null;
+            }
+        }
+        console.log(shownHand);
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +80,18 @@ function sucessInfo(data){
     document.getElementById("gameName").innerHTML = data.gamename;
     myHand = data.hand;
     console.log(myHand);
+
+    let x = showId;
+    while(shownHand.length < 7){
+        if(x < myHand.length){
+            shownHand[shownHand.length] = myHand[x];
+            x++;
+        }
+        else{
+            shownHand[shownHand.length] = null;
+        }
+    }
+    console.log(shownHand);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(window).load(function(){
@@ -413,7 +457,7 @@ theCanvas.style.top = "20px"
     console.log("x: " + x + " y: " + y)
   //  drawSquare(35,575,95,1,1)
 //drawSquare(1525,575,95,1,1)
-if(x > 5 && x < 60 && 
+if(x > 5 && x < 60 &&
   (y > window.innerHeight-441 && y <  window.innerHeight-380 || y > 550 && y < 605 || y > 475 && y < 540 ||  y > 550 && y < 605) ){
   console.log("left button clicked")
 }
@@ -424,7 +468,7 @@ if((x > 1005 && x < 1060 || x > 1220 && x < 1265 || x > 1325 && x < 1380 || x > 
 //click to find mouse x and y pos (doesnt spam like onmouesmove variable)
 //console.log(e.clientX + " " + e.clientY)
 //
-  
+
 
 
         }
@@ -558,7 +602,7 @@ function drawSquare(xpos,ypos,rot,xscale,yscale){
 
 context.translate(xpos, ypos);
 context.rotate(rot);
-context.beginPath();            
+context.beginPath();
       context.fillStyle = 'rgb(204,0,0,0.5)'
       context.strokeStyle = '#000000';
     context.rect(0,0,45,45);

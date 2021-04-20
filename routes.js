@@ -155,6 +155,7 @@ router.post("/create",function(req,res) {
     openIndex = 0;
     gameActive = true;
     myDeck = new Deck();
+    console.log(myDeck);
     myDeck.shuffle();
     numActive = 0;
     playerSetNum = req.body.playernum;
