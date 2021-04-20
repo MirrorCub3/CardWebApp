@@ -408,12 +408,23 @@ theCanvas.style.top = "20px"
    {
           //code for mouse location
  //onmousemove = function(e){console.log("mouse location:",e.clientX , e.clientY)}
-
-
-
+ const x = e.clientX -  (window.innerHeight-(window.innerHeight-430))
+    const y = e.clientY - 20
+    console.log("x: " + x + " y: " + y)
+  //  drawSquare(35,575,95,1,1)
+//drawSquare(1525,575,95,1,1)
+if(x > 5 && x < 60 && 
+  (y > window.innerHeight-441 && y <  window.innerHeight-380 || y > 550 && y < 605 || y > 475 && y < 540 ||  y > 550 && y < 605) ){
+  console.log("left button clicked")
+}
+if((x > 1005 && x < 1060 || x > 1220 && x < 1265 || x > 1325 && x < 1380 || x > 1500 && x < 1545 || x > 855 && x < 910)
+ && (y > window.innerHeight-441 && y <  window.innerHeight-380 || y > 550 && y < 605 || y > 475 && y < 540 ||  y > 550 && y < 605) ){
+  console.log("right button clicked")
+}
 //click to find mouse x and y pos (doesnt spam like onmouesmove variable)
 //console.log(e.clientX + " " + e.clientY)
 //
+  
 
 
         }
@@ -444,129 +455,117 @@ theCanvas.style.top = "20px"
 }
 
    function paint()
-   {
+ {
 
-   // draw table background
-    context.fillStyle = '#186110';
-    context.fillRect(0,0,theCanvas.width,260);
-    context.strokeStyle = '#000000';
-    context.strokeRect(0,0,theCanvas.width,260);
-    //player and other players card placements (table)
-     context.strokeRect(5,5,theCanvas.width/3,250);
-       context.strokeRect(theCanvas.width/3+15,5,theCanvas.width/3,250);
-       context.strokeRect(theCanvas.width/3*2+25,5,theCanvas.width/3,250);
+ // draw table background
+ context.fillStyle = '#186110';
+ context.fillRect(0,0,theCanvas.width,260);
+ context.strokeStyle = '#000000';
+ context.strokeRect(0,0,theCanvas.width,260);
+ //player and other players card placements (table)
+ context.strokeRect(5,5,theCanvas.width/3,250);
+ context.strokeRect(theCanvas.width/3+15,5,theCanvas.width/3,250);
+ context.strokeRect(theCanvas.width/3*2+25,5,theCanvas.width/3,250);
 
 
-
-     // draw players cards background
-    context.fillStyle = '#305fb0';
-        context.fillRect(0,505,theCanvas.width,220);
-        context.fillStyle = '#1fd14f';
-        context.fillRect(0,505,50,220)
-        context.fillStyle = '#1fd14f';
-        context.fillRect(1500,505,50,220)
-
+ // draw players cards background
+ context.fillStyle = '#305fb0';
+ context.fillRect(0,505,theCanvas.width,220);
 
 //players table placements
-    context.fillStyle = '#ff0000';
-          context.fillRect(0,275,theCanvas.width,220);
+ context.fillStyle = '#ff0000';
+ context.fillRect(0,275,theCanvas.width,220);
 
-  //outline tables
-    context.strokeStyle = '#000000';
-  context.strokeRect(0,505,theCanvas.width,220);
+ //outline tables
+ context.strokeStyle = '#000000';
+ context.strokeRect(0,505,theCanvas.width,220);
 
-  context.strokeRect(0,275,theCanvas.width,220);
+ context.strokeRect(0,275,theCanvas.width,220);
 
 
 
-    if(others.length>0){
+ if(others.length>0){
 // player name display
-      context.fillStyle = '#000000';
-      context.font = '30px sans-serif';
-      context.textBaseline = 'top';
-      context.fillText  (others[0].name, 10, 10);
-      if(others.length>1)
-      context.fillText  (others[1].name, theCanvas.width/3+20, 10);
-      if(others.length>2)
-      context.fillText  (others[2].name, theCanvas.width/3*2+30, 10);
-      context.fillText  ($("#nameset").val(), 10, 280);
+ context.fillStyle = '#000000';
+ context.font = '30px sans-serif';
+ context.textBaseline = 'top';
+ context.fillText (others[0].name, 10, 10);
+ if(others.length>1)
+ context.fillText (others[1].name, theCanvas.width/3+20, 10);
+ if(others.length>2)
+ context.fillText (others[2].name, theCanvas.width/3*2+30, 10);
+ context.fillText ($("#nameset").val(), 10, 280);
 
-    }
+ }
 
 
 
 
 //175 px difference for cards x pos //card holder for players hand
 
-      context.drawImage(tempCard1,110,510,150,200)
-      context.drawImage(tempCard2,285,510,150,200)
-      context.drawImage(tempCard3,460,510,150,200)
+ context.drawImage(tempCard1,110,510,150,200)
+ context.drawImage(tempCard2,285,510,150,200)
+ context.drawImage(tempCard3,460,510,150,200)
 
-      //yellow outline
-      context.lineWidth = 10
-             context.strokeStyle = '#f5e342';
-             context.strokeRect(720,510,150,200)
-      //this postision is the wit the yellow box
-      context.drawImage(tempCard4,720,510,150,200)
+ //yellow outline
+ context.lineWidth = 10
+ context.strokeStyle = '#f5e342';
+ context.strokeRect(720,510,150,200)
+ //this postision is the wit the yellow box
+ context.drawImage(tempCard4,720,510,150,200)
 
 
-//      context.drawImage(tempCard5,775,510,150,200)
-      context.drawImage(tempCard6,950,510,150,200)
-      context.drawImage(tempCard7,1125,510,150,200)
-      context.drawImage(tempCard8,1300,510,150,200)
+// context.drawImage(tempCard5,775,510,150,200)
+ context.drawImage(tempCard6,950,510,150,200)
+ context.drawImage(tempCard7,1125,510,150,200)
+ context.drawImage(tempCard8,1300,510,150,200)
 
 //other player card placements (left on table)
-      context.lineWidth = 1
-         context.drawImage(tempCard9,10,50,150,  200)
-         context.drawImage(tempCard10,185,50, 150, 200)
-        context.drawImage(tempCard11,360,50, 150,200)
+ context.lineWidth = 1
+ context.drawImage(tempCard9,10,50,150, 200)
+ context.drawImage(tempCard10,185,50, 150, 200)
+ context.drawImage(tempCard11,360,50, 150,200)
 
 //other player card placement (middle on table)
-        context.drawImage(tempCard12,545,50, 150, 200)
-        context.drawImage(tempCard13,720,50, 150, 200)
-        context.drawImage(tempCard14,895,50, 150, 200)
+ context.drawImage(tempCard12,545,50, 150, 200)
+ context.drawImage(tempCard13,720,50, 150, 200)
+ context.drawImage(tempCard14,895,50, 150, 200)
 
-  //other player card placement (right on table)
-       context.drawImage(tempCard15,1080,50, 150, 200)
-       context.drawImage(tempCard16,1240,50, 150, 200)
-       context.drawImage(tempCard17,1400,50, 150, 200)
+ //other player card placement (right on table)
+ context.drawImage(tempCard15,1080,50, 150, 200)
+ context.drawImage(tempCard16,1240,50, 150, 200)
+ context.drawImage(tempCard17,1400,50, 150, 200)
 
 //players own placements table
-        context.drawImage(tempCard18,545,285, 150, 200)
-        context.drawImage(tempCard19,720,285, 150, 200)
-        context.drawImage(tempCard20,895,285, 150, 200)
+ context.drawImage(tempCard18,545,285, 150, 200)
+ context.drawImage(tempCard19,720,285, 150, 200)
+ context.drawImage(tempCard20,895,285, 150, 200)
+
+context.fillStyle = 'rgb(0,0,0,0.5)'
+ context.fillRect(0,500,75,220)
+  context.fillRect(1485,500,75,220)
 
 
 
+drawSquare(35,575,95,1,1)
+drawSquare(1525,575,95,1,1)
 
+ context.restore();
 
-    context.restore();
+ }
+function drawSquare(xpos,ypos,rot,xscale,yscale){
+ context.save();
 
-   }
-
-function drawTriangle( xpos, ypos,rot, xscale,yscale)
-    {
-
-        context.save(); //save current state in stack
-        context.setTransform(1,0,0,1,0,0);
-
-        context.translate(xpos,ypos);
-        context.rotate(rot);
-        context.scale(xscale,yscale);
-        context.fillStyle = "rgb(0,0,0)";
-
-         context.beginPath();
-    context.moveTo(0, 0);
-    context.lineTo(90,50);
-    context.lineTo(0, 90);
-         context.closePath();
-         context.fill();
-
-
-        context.restore();
-    }
-
-
+context.translate(xpos, ypos);
+context.rotate(rot);
+context.beginPath();            
+      context.fillStyle = 'rgb(204,0,0,0.5)'
+      context.strokeStyle = '#000000';
+    context.rect(0,0,45,45);
+    context.fill();
+context.stroke();
+context.restore();
+}
    function reset()
    {
 
