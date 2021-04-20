@@ -28,6 +28,11 @@ Changes 4/15
 - draw card method appears to be working - not sure what to do when the deck is empty
 - draw button will disable if there's no cards left
 - the unchangable values on the settings screen will disable when the game starts
+4/19-------------------------------------------------------------
+- fixed the player index bug as best I could
+- added the show hand which updates to the most current hand
+	- showId is the first index to be added to the shown hand array;
+- added routes.js to handle requests
 
 Need:
 - a draw card button, table button, and discard along with all their functions
@@ -45,3 +50,30 @@ Want:
 - custom deck - setting the numbers of each card type
 - joker checkbox - in case a game wants jokers, it'll add 2 to the list
 - password on settings that can be set once the server is run - prevents someone from ruining the game midway
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////index5.js
+let port = process.env.PORT || 4005;
+app.listen(port,function(){
+    console.log("started on port " + port);
+}); 
+/////////////replace window.load with
+ $(document).ready(function(){
+////////////////////////////
+///// work on display hand
+let shownHand = [];
+let showId = 0;
+let tableHand = [];
+///////
+let x = showId;
+    while(shownHand.length < 7){
+        if(x >= myHand.length){
+            shownHand[shownHand.length] = myHand[x];
+            x++;
+        }
+        else{
+            shownHand[shownHand.length] = null;
+        }
+    }
+    console.log(shownHand);
+///////////////// add to player object
+this.tableHand = [];
