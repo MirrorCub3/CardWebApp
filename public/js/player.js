@@ -46,6 +46,13 @@ function DrawCard(){
 function ToTable(){
     console.log("table");
 }
+function shiftLeft(){
+
+}
+function shiftRight(){
+  
+  
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Discard(){
     //////////////code here to determine card selected
