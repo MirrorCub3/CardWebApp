@@ -112,6 +112,9 @@ function shiftRight(){
   if(showId >= myHand.length - 4){
     showId = myHand.length - 4;
   }
+  if(myHand.length == 0){
+     showId = -3;
+  }
   let x = showId;
   shownHand.length = 0;
   while(shownHand.length < 7){

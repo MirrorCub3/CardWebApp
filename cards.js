@@ -27,7 +27,7 @@ module.exports = class Deck {
           "/views/fourHearts.png",
           "/views/fourSpades.png",
           "/views/fourClubs.png",
-          "/views/fourDiamonds.png",
+          "/views/fourDiamonds.jpeg",
           ///5s
           "/views/fiveHearts.png ",
           "/views/fiveSpades.png",
@@ -66,8 +66,8 @@ module.exports = class Deck {
           //queen
           "/views/queenHearts.png",
           "/views/queenSpades.png",
-          "/views/queenClubs.png",
-          "/views/queenDiamonds.png",
+          "/views/queenClubs.jpeg",
+          "/views/queenDiamonds.jpg",
           //king
           "/views/kingHearts.jpg",
           "/views/kingSpades.png",
