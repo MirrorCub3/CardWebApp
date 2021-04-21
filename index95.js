@@ -11,7 +11,6 @@ app.use(express.static("./public"));
 
 app.use(routes);
 
-let port = process.env.PORT || 4095;
-app.listen(port,function(){
-    console.log("started on port " + port);
+app.listen(4095,function(){
+    console.log("started on port " + 4095);
 });
