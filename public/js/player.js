@@ -5,7 +5,7 @@ let realId = 0;
 let others = [];
 
 let shownHand = [];
-let showId = 0;
+let showId = -3;
 let tableHand = [];
 function SendMessage(){
     let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value );
@@ -25,12 +25,18 @@ function DrawCard(){
         let x = showId;
         shownHand.length = 0;
         while(shownHand.length < 7){
-            if(x < myHand.length){
-                shownHand[shownHand.length] = myHand[x];
+            if(x < 0){
+                shownHand[shownHand.length] = null;
                 x++;
             }
             else{
-                shownHand[shownHand.length] = null;
+                if(x < myHand.length){
+                    shownHand[shownHand.length] = myHand[x];
+                    x++;
+                }
+                else{
+                    shownHand[shownHand.length] = null;
+                }
             }
         }
         console.log(shownHand);
@@ -59,12 +65,18 @@ function Discard(){
         let x = showId;
         shownHand.length = 0;
         while(shownHand.length < 7){
-            if(x < myHand.length){
-                shownHand[shownHand.length] = myHand[x];
+            if(x < 0){
+                shownHand[shownHand.length] = null;
                 x++;
             }
             else{
-                shownHand[shownHand.length] = null;
+                if(x < myHand.length){
+                    shownHand[shownHand.length] = myHand[x];
+                    x++;
+                }
+                else{
+                    shownHand[shownHand.length] = null;
+                }
             }
         }
         console.log(shownHand);
@@ -84,13 +96,20 @@ function sucessInfo(data){
     console.log(myHand);
 
     let x = showId;
+    shownHand.length = 0;
     while(shownHand.length < 7){
-        if(x < myHand.length){
-            shownHand[shownHand.length] = myHand[x];
+        if(x < 0){
+            shownHand[shownHand.length] = null;
             x++;
         }
         else{
-            shownHand[shownHand.length] = null;
+            if(x < myHand.length){
+                shownHand[shownHand.length] = myHand[x];
+                x++;
+            }
+            else{
+                shownHand[shownHand.length] = null;
+            }
         }
     }
     console.log(shownHand);
