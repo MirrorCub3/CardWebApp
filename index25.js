@@ -13,9 +13,5 @@ app.use(routes);
 
 
 app.listen(4025,function(){
-<<<<<<< HEAD
     console.log("started on port 4025");
-=======
-    console.log("started on port " + 4025);
->>>>>>> 1e933e0c4577eea1baa7539526f8eedd261bf229
 });
