@@ -429,25 +429,7 @@ theCanvas.style.top = "20px"
    }
    function onMouseClick(e)
    {
-          //code for mouse location
- //onmousemove = function(e){console.log("mouse location:",e.clientX , e.clientY)}
- const x = e.clientX -  (window.innerHeight-(window.innerHeight-430))
-    const y = e.clientY - 20
-    console.log("x: " + x + " y: " + y)
-  //  drawSquare(35,575,95,1,1)
-//drawSquare(1525,575,95,1,1)
-if((x > 5 && x < 60 || x > -28 && x < -5) &&
-  (y > window.innerHeight-441 && y <  window.innerHeight-380 || y > 550 && y < 605 || y > 475 && y < 540 ||  y > 550 && y < 605) ){
-  console.log("left button clicked")
-}
-if((x > 1005 && x < 1060 || x > 1220 && x < 1265 || x > 1325 && x < 1380 || x > 1500 && x < 1545 || x > 855 && x < 910 ||  x > 1425 &&
-   x < 1480 ||  x > 1250 && x < 1305  ||  x > 1045 && x < 1100)
- && (y > window.innerHeight-441 && y <  window.innerHeight-380 || y > 550 && y < 605 || y > 475 && y < 540 ||  y > 550 && y < 605) ){
-  console.log("right button clicked")
-}
-//click to find mouse x and y pos (doesnt spam like onmouesmove variable)
-//console.log(e.clientX + " " + e.clientY)
-//
+   
 
 
 
