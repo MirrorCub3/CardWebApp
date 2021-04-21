@@ -214,6 +214,12 @@ window.addEventListener('beforeunload',function () {
 playerCheck();
 function playerCheck() {
     $.get("/checkplayer", {active:1,id:realId,playername:$("#nameset").val()},function(data){
+        if(!data){
+            $("body").append("<div class = 'overlay'></div>");
+        }
+        else{
+            $( "body" ).removeClass( "overlay" );
+        }
         others = data.others;
         tableHand = data.tablehand;
         myHand = data.hand;
