@@ -566,15 +566,6 @@ if((x > 1005 && x < 1060 || x > 1220 && x < 1265 || x > 1325 && x < 1380 || x > 
  context.drawImage(tempCard19,720,285, 150, 200)
  context.drawImage(tempCard20,895,285, 150, 200)
 
-context.fillStyle = 'rgb(0,0,0,0.5)'
- context.fillRect(0,500,75,220)
-  context.fillRect(1485,500,75,220)
-
-
-
-drawSquare(35,575,95,1,1)
-drawSquare(1525,575,95,1,1)
-
  context.restore();
 
  }
