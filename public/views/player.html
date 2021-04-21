@@ -27,14 +27,14 @@
           <input id="sendButton" type= "submit" value="Send" onClick = "SendMessage()">
           <hr>
           <div id = "pileButtons">
-              <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table" onClick = "ToTable()" >
+              <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table - Cards over 3 will be discarded" onClick = "ToTable()" >
               <input id="main" type= "button" value="Draw Card" title= "Draw one card" onClick = "DrawCard()">
               <input id="discard" type= "button" value="Discard" title= "Discard Currently Selected Card" onClick = "Discard()">
           </div>
-         <div id = "shiftButtons">
+          <hr>
+          <div id = "shiftButtons">
             <input id="shiftLeft" type= "button" value="Shift Left" title= "Shift Left" onClick = "shiftLeft()" >
             <input id="shiftRight" type= "button" value="Shift Right" title= "Shift Right" onClick = "shiftRight()" >
-
           </div>
       </div>
     </section>

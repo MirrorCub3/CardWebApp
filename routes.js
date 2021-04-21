@@ -35,7 +35,7 @@ router.get("/player",function(req,res) {
     else{
         res.sendFile(__dirname + "/public/views/player.html");
     }
-    console.log(playerSetNum + " " + openIndex);
+    //console.log(playerSetNum + " " + openIndex);
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/player2",function(req,res) { // called when player doc loads
@@ -95,7 +95,7 @@ router.get("/checkplayer", function(req,res){
             }
         }
         playerList[id].name = req.query.playername;
-        res.json({gamename:gameName,chat:chat,empty:myDeck.CheckEmpty(),gameactive:gameActive,others:otherPlayers});
+        res.json({gamename:gameName,chat:chat,empty:myDeck.CheckEmpty(),gameactive:gameActive,others:otherPlayers,tablehand:playerList[id].tableHand,hand:playerList[id].hand});
     }
     //console.log(req.query.id + " " + playerList[req.query.id].active);
 });
@@ -111,7 +111,7 @@ router.get("/end", function(req,res){
     chat.length = 0;
     openIndex = 0;
     numActive = 0;
-    console.log(playerList);
+    //console.log(playerList);
     //playerList.length = 0;
     for(let player in playerList){
         playerList[player].defaultState(player);
@@ -155,7 +155,7 @@ router.post("/create",function(req,res) {
     openIndex = 0;
     gameActive = true;
     myDeck = new Deck();
-    console.log(myDeck);
+    //console.log(myDeck);
     myDeck.shuffle();
     numActive = 0;
     playerSetNum = req.body.playernum;
@@ -216,7 +216,21 @@ router.post("/chat",function(req,res) {
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post("/totable",function(req,res) {
-
+    if(!req.body.card)
+        return
+    let id = parseInt(req.body.id);
+    let card = req.body.card;
+    let index = myDeck.FindIndex(card,playerList[id].hand);
+    if(index != -1){
+        playerList[id].hand.splice(index, 1);
+        playerList[id].tableHand[playerList[id].tableHand.length] = card;
+        // if the table hand exceeds 3 cards - discard the first one
+        if(playerList[id].tableHand.length > 3){
+            myDeck.Discard(playerList[id].tableHand[0]);
+            playerList[id].tableHand.splice(0, 1);
+        }
+    }
+    res.json({hand:playerList[id].hand, tablehand:playerList[id].tableHand});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post("/discard",function(req,res) {

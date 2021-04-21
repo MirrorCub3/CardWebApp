@@ -19,8 +19,8 @@ function DrawCard(){
         if(!data)
           return;
         myHand = data.cards;
-        console.log("draw success");
-        console.log(myHand);
+        // console.log("draw success");
+        // console.log(myHand);
 
         let x = showId;
         shownHand.length = 0;
@@ -39,19 +39,96 @@ function DrawCard(){
                 }
             }
         }
-        console.log(shownHand);
+        //console.log(shownHand);
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function ToTable(){
-    console.log("table");
-}
-function shiftLeft(){
+    if(myHand.length ==0)
+        return;
+    let card = null;
+    card = shownHand[3];
+    if(shownHand[3] == null)
+        return;
+    $.post("/totable", {id:realId,card:card},function(data){
+        if(!data)
+          return;
+        myHand = data.hand;
+        tableHand.length = 0;
+        tableHand = data.tablehand;
+        // console.log("table success");
+        // console.log(myHand);
 
+        let x = showId;
+        shownHand.length = 0;
+        while(shownHand.length < 7){
+            if(x < 0){
+                shownHand[shownHand.length] = null;
+                x++;
+            }
+            else{
+                if(x < myHand.length){
+                    shownHand[shownHand.length] = myHand[x];
+                    x++;
+                }
+                else{
+                    shownHand[shownHand.length] = null;
+                }
+            }
+        }
+        // console.log(shownHand);
+        // console.log("table hand=============================");
+        // console.log(tableHand);
+        //console.log(others);
+    });
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+function shiftLeft(){
+    showId--;
+    if(showId <= -3){
+      showId = -3;
+    }
+    let x = showId;
+    shownHand.length = 0;
+    while(shownHand.length < 7){
+        if(x < 0){
+            shownHand[shownHand.length] = null;
+            x++;
+        }
+        else{
+            if(x < myHand.length){
+                shownHand[shownHand.length] = myHand[x];
+                x++;
+            }
+            else{
+                shownHand[shownHand.length] = null;
+            }
+        }
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function shiftRight(){
-  
-  
+  showId++;
+  if(showId >= myHand.length - 4){
+    showId = myHand.length - 4;
+  }
+  let x = showId;
+  shownHand.length = 0;
+  while(shownHand.length < 7){
+      if(x < 0){
+          shownHand[shownHand.length] = null;
+          x++;
+      }
+      else{
+          if(x < myHand.length){
+              shownHand[shownHand.length] = myHand[x];
+              x++;
+          }
+          else{
+              shownHand[shownHand.length] = null;
+          }
+      }
+  }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function Discard(){
@@ -119,7 +196,6 @@ function sucessInfo(data){
             }
         }
     }
-    console.log(shownHand);
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function(){
@@ -136,6 +212,8 @@ playerCheck();
 function playerCheck() {
     $.get("/checkplayer", {active:1,id:realId,playername:$("#nameset").val()},function(data){
         others = data.others;
+        tableHand = data.tablehand;
+        myHand = data.hand;
         //if(data.gameActive == false){  window.location.reload(true);}
         document.getElementById("gameName").innerHTML = data.gamename;
         document.getElementById("chatbox").innerHTML = "";
@@ -152,7 +230,6 @@ function playerCheck() {
           $('#main').removeAttr("disabled");
           $('#main').attr( 'title',"Draw one card");
         }
-        // update opponesnt card hand here
     });
     let numMilliSeconds = 500;
     setTimeout(playerCheck, numMilliSeconds);
@@ -323,7 +400,7 @@ theCanvas.style.top = "20px"
 ///////////////////////////////////////////////////////
    function gameLoop()
    {
-        var FRAME_RATE = 10;
+        var FRAME_RATE = 24;
         var intervalTime = 1000/FRAME_RATE;
 
         input();
@@ -517,6 +594,7 @@ context.restore();
    }
    function animate()
    {
+  ///// player's hand
      if(shownHand[0]!=null)
          tempCard1.src = shownHand[0].image.replace('90x90', '225x225');
      else tempCard1.src = "/views/clear.png";
@@ -538,6 +616,55 @@ context.restore();
      if(shownHand[6]!=null)
          tempCard8.src = shownHand[6].image.replace('90x90', '225x225');
      else tempCard8.src = "/views/clear.png";
+  ////// player's table
+    if(tableHand.length > 0)
+        tempCard18.src = tableHand[0].image.replace('90x90', '225x225');
+    else tempCard18.src = "/views/clear.png";
+    if(tableHand.length > 1)
+        tempCard19.src = tableHand[1].image.replace('90x90', '225x225');
+    else tempCard19.src = "/views/clear.png";
+    if(tableHand.length > 2)
+        tempCard20.src = tableHand[2].image.replace('90x90', '225x225');
+    else tempCard20.src = "/views/clear.png";
+    ////// other 1's table
+    if(others.length > 0){
+      let otherHand = others[0].tableHand;
+      if(otherHand.length > 0)
+          tempCard9.src = otherHand[0].image.replace('90x90', '225x225');
+      else tempCard9.src = "/views/clear.png";
+      if(otherHand.length > 1)
+          tempCard10.src = otherHand[1].image.replace('90x90', '225x225');
+      else tempCard10.src = "/views/clear.png";
+      if(otherHand.length > 2)
+          tempCard11.src = otherHand[2].image.replace('90x90', '225x225');
+      else tempCard11.src = "/views/clear.png";
+    }
+    ////// other 2's table
+    if(others.length > 1){
+      let otherHand = others[1].tableHand;
+      if(otherHand.length > 0)
+          tempCard12.src = otherHand[0].image.replace('90x90', '225x225');
+      else tempCard12.src = "/views/clear.png";
+      if(otherHand.length > 1)
+          tempCard13.src = otherHand[1].image.replace('90x90', '225x225');
+      else tempCard13.src = "/views/clear.png";
+      if(otherHand.length > 2)
+          tempCard14.src = otherHand[2].image.replace('90x90', '225x225');
+      else tempCard14.src = "/views/clear.png";
+    }
+    ////// other 3's table
+    if(others.length > 2){
+      let otherHand = others[2].tableHand;
+      if(otherHand.length > 0)
+          tempCard15.src = otherHand[0].image.replace('90x90', '225x225');
+      else tempCard15.src = "/views/clear.png";
+      if(otherHand.length > 1)
+          tempCard16.src = otherHand[1].image.replace('90x90', '225x225');
+      else tempCard16.src = "/views/clear.png";
+      if(otherHand.length > 2)
+          tempCard17.src = otherHand[2].image.replace('90x90', '225x225');
+      else tempCard17.src = "/views/clear.png";
+    }
    }
 ////////////////////////////////////////////////////////
 }

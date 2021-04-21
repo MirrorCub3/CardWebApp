@@ -46,8 +46,8 @@ module.exports = class Deck {
           //8s
           "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/8_of_hearts.svg/706px-8_of_hearts.svg.png",
           "https://th.bing.com/th/id/OIP.EVeEuFohZaxfOLyKVsfftQHaKv?pid=ImgDet&rs=1",
-          "https://th.bing.com/th/id/R8afee604213ca296067245ce18458af2?rik=MrIs8Up%2buv659Q&riu=http%3a%2f%2flivingwithcards.com%2fwp-content%2fuploads%2f2015%2f11%2f8_of_diamonds.png&ehk=htFU6W7YlpwxM5emDgGz0TTYislxaqDzg6uCG%2bQaReA%3d&risl=&pid=ImgRawg",
           "https://th.bing.com/th/id/R126f2af5c775676a8d623d8e8c372c54?rik=t1nidW1U1DW2AQ&riu=http%3a%2f%2fwww.bjinsider.com%2fnewsletter_200_hands_Image183.gif&ehk=7Hm1EFDJQPc04oiLjO%2b%2bEfDyMZc2alzBANrGhtOaC8U%3d&risl=&pid=ImgRaw",
+          "https://th.bing.com/th/id/R8afee604213ca296067245ce18458af2?rik=MrIs8Up%2buv659Q&riu=http%3a%2f%2flivingwithcards.com%2fwp-content%2fuploads%2f2015%2f11%2f8_of_diamonds.png&ehk=htFU6W7YlpwxM5emDgGz0TTYislxaqDzg6uCG%2bQaReA%3d&risl=&pid=ImgRawg",
           //9s
           "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/9_of_hearts.svg/530px-9_of_hearts.svg.png",
           "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/9_of_spades.svg/1200px-9_of_spades.svg.png",
@@ -98,29 +98,29 @@ module.exports = class Deck {
         this.deck = this.shuffled; // once shuffled, make this the new deck
     }
     Discard(card){
-      this.discard.push(card);
-      console.log("==============================");
-      console.log(this.discard);
+      this.discard[this.discard.length] = card;
+      //console.log("==============================");
+      //console.log(this.discard); discard seems to be working
       //////////////////!!!!!NEEDS TO BE TESTED
-      if(this.deck.length < 1){ // f main is empty, shuffle discard back to main
-        console.log();
-          for(let id1 = 0; id1 < this.discard.length; id1++){
-              for(let id2 = id1 + 1; id2 < this.discard.length; id2++){
-                  if(this.discard[id1].value == this.discard[id2].value &&
-                     this.discard[id1].suite == this.discard[id2].suite){
-                        this.discard[id1] == null;
-                  }
-              }
-          }
-          for(let cur in this.discard){
-              if(this.discard[cur] == null){
-                  this.deck.splice(cur, 1);
-              }
-          }
-          this.deck = this.discard;
-          this.discard.length = 0;
-          this.shuffle();
-      }
+      // if(this.deck.length < 1){ // f main is empty, shuffle discard back to main
+      //   console.log();
+      //     for(let id1 = 0; id1 < this.discard.length; id1++){
+      //         for(let id2 = id1 + 1; id2 < this.discard.length; id2++){
+      //             if(this.discard[id1].value == this.discard[id2].value &&
+      //                this.discard[id1].suite == this.discard[id2].suite){
+      //                   this.discard[id1] == null;
+      //             }
+      //         }
+      //     }
+      //     for(let cur in this.discard){
+      //         if(this.discard[cur] == null){
+      //             this.deck.splice(cur, 1);
+      //         }
+      //     }
+      //     this.deck = this.discard;
+      //     this.discard.length = 0;
+      //     this.shuffle();
+      // }
     }
     Draw(){
         if(this.deck.length > 0){
