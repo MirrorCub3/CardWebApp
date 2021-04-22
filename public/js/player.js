@@ -320,6 +320,7 @@ window.addEventListener('load', eventWindowLoaded, false);
 function eventWindowLoaded() {
    canvasApp();
 
+
 }
 
 function Create2DArray(rows) {
@@ -402,6 +403,7 @@ theCanvas.style.top = "20px"
 
 
 
+
         }
 
    function input()
@@ -445,12 +447,11 @@ theCanvas.style.top = "20px"
 
 
  // draw players cards background
- context.fillStyle = '#000000';
- context.fillRect(0,505,theCanvas.width,220);
-  context.lineWidth = 8
-  context.strokeStyle = '#cc0000'
-  context.strokeRect(0,500,theCanvas.width,215);
-    
+   //context.fillStyle = '#000000';
+   context.clearRect(0,505,theCanvas.width,220);
+   context.lineWidth = 8
+   context.strokeStyle = '#cc0000'
+   context.strokeRect(0,500,theCanvas.width,215);
 
 
 //players table placements
@@ -620,6 +621,3 @@ context.restore();
    }
 ////////////////////////////////////////////////////////
 }
-
-
-
