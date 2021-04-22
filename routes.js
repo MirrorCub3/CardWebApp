@@ -11,7 +11,7 @@ let playerList = []; // Player object array
 let numActive = 0;
 let handNum = 0;
 let openIndex = 0;
-
+let infinite = false;
 const defaultName = "Virtual Cards";
 let gameName = "Virtual Cards";
 //let deckSize = 52;
@@ -22,7 +22,8 @@ router.get("/",function(req,res) {
     res.sendFile(__dirname + "/public/views/index.html");
 });
 router.get("/start",function(req,res) { // loads saved data into the page
-    res.json({gamename:gameName,handnum:handNum,playernum:playerSetNum});
+    res.json({gamename:gameName,handnum:handNum,playernum:playerSetNum,infinite:infinite,
+            shuffleon:myDeck.shuffleOnReplace});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/player",function(req,res) {
@@ -152,11 +153,19 @@ router.post("/create",function(req,res) {
       return;
     }
     //////////////////////////////////////
+    myDeck = new Deck();
+    myDeck.shuffle();
+    if(req.body.infinite == "true")
+        infinite = true;
+    else
+        infinite = false;
+
+    if(req.body.shuffleon == "true")
+        myDeck.shuffleOnReplace = true;
+    else
+        myDeck.shuffleOnReplace = false;
     openIndex = 0;
     gameActive = true;
-    myDeck = new Deck();
-    //console.log(myDeck);
-    myDeck.shuffle();
     numActive = 0;
     playerSetNum = req.body.playernum;
     playerList.length = playerSetNum;
@@ -250,6 +259,15 @@ function validString(string) {
     let regex =  /^[A-Za-z0-9 ]*[A-Za-z0-9 ]*$/;
     let  validString = regex.test(string);
     return (validString);
+ }
+ ////////////////////////////////////////////////////////////////////////////////////////////////////////
+ timeFunction();
+ function timeFunction() {
+     if(infinite == true && gameActive){
+        myDeck.DiscardToMain();
+     }
+     let numMilliSeconds = 250;
+     setTimeout(timeFunction, numMilliSeconds);
  }
 
 module.exports = router;

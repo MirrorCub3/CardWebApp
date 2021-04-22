@@ -11,7 +11,6 @@ app.use(express.static("./public"));
 
 app.use(routes);
 
-
 app.listen(4005,function(){
-    console.log("started on port " + 4005);
+    console.log("started on port 4005");
 });

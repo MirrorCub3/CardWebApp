@@ -146,8 +146,8 @@ function Discard(){
         if(!data)
           return;
         myHand = data.hand;
-        console.log("discard success");
-        console.log(myHand);
+        // console.log("discard success");
+        // console.log(myHand);
 
         let x = showId;
         shownHand.length = 0;
@@ -166,7 +166,7 @@ function Discard(){
                 }
             }
         }
-        console.log(shownHand);
+        // console.log(shownHand);
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,12 +175,12 @@ function sucessInfo(data){
         return;
     id = parseInt(data.id);
     realId = parseInt(data.realid);
-    console.log(id + " " + realId);
+    //console.log(id + " " + realId);
     document.getElementById("nameset").value = "Player " + id;
     document.getElementById("playerId").innerHTML = "PLAYER " + id;
     document.getElementById("gameName").innerHTML = data.gamename;
     myHand = data.hand;
-    console.log(myHand);
+    //console.log(myHand);
 
     let x = showId;
     shownHand.length = 0;
@@ -202,7 +202,7 @@ function sucessInfo(data){
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function(){
-    console.log("player ready");
+    //console.log("player ready");
     //$.get("/player2", {index:1,id:id},sucessInfo);
     $.get("/player2",sucessInfo);
 });
@@ -224,7 +224,7 @@ function playerCheck() {
             document.getElementById("chatbox").innerHTML +=  data.chat[i] + "\n";
         }
         if(data.empty == true){
-          $("#main").val("Empty");
+          $("#main").val("  Empty  ");
           $('#main').attr("disabled", true);
           $('#main').attr( 'title',"There are 0 cards in the Main Deck");
         }
@@ -319,7 +319,6 @@ function playerCheck() {
 window.addEventListener('load', eventWindowLoaded, false);
 function eventWindowLoaded() {
    canvasApp();
-  
 
 }
 
@@ -400,7 +399,6 @@ theCanvas.style.top = "20px"
    }
    function onMouseClick(e)
    {
-   
 
 
 

@@ -5,6 +5,8 @@ module.exports = class Deck {
         this.discard = [];
         this.discard.length = 0;
         this.imageId = 0;
+        this.shuffleOnReplace = false;
+        this.drawActive = false;
         const suites = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
         const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
         const images = [
@@ -99,36 +101,45 @@ module.exports = class Deck {
     }
     Discard(card){
       this.discard[this.discard.length] = card;
-      //console.log("==============================");
-      //console.log(this.discard); discard seems to be working
-      //////////////////!!!!!NEEDS TO BE TESTED
-      // if(this.deck.length < 1){ // f main is empty, shuffle discard back to main
-      //   console.log();
-      //     for(let id1 = 0; id1 < this.discard.length; id1++){
-      //         for(let id2 = id1 + 1; id2 < this.discard.length; id2++){
-      //             if(this.discard[id1].value == this.discard[id2].value &&
-      //                this.discard[id1].suite == this.discard[id2].suite){
-      //                   this.discard[id1] == null;
-      //             }
-      //         }
-      //     }
-      //     for(let cur in this.discard){
-      //         if(this.discard[cur] == null){
-      //             this.deck.splice(cur, 1);
-      //         }
-      //     }
-      //     this.deck = this.discard;
-      //     this.discard.length = 0;
-      //     this.shuffle();
-      // }
+    }
+    DiscardToMain(){
+        if(this.discard.length <= 0){
+            return;
+        }
+        for(let id1 = 0; id1 < this.discard.length; id1++){
+            for(let id2 = id1 + 1; id2 < this.discard.length; id2++){
+                if(this.discard[id1] != null && this.discard[id2] != null && this.discard[id1].value == this.discard[id2].value &&
+                   this.discard[id1].suite == this.discard[id2].suite){
+                      console.log(this.discard[id1]);
+                      this.discard[id1] = null;
+                      console.log(this.discard[id1]);
+                }
+            }
+        }
+        for(let cur in this.discard){
+            if(this.discard[cur] === null){
+                this.discard.splice(cur, 1);
+            }
+        }
+        for(let card in this.discard){
+            this.deck[this.deck.length] = this.discard[card];
+        }
+        if(this.shuffleOnReplace){ this.shuffle(); }
+        this.discard.length = 0;
     }
     Draw(){
+      if(this.drawActive == true){
+          return;
+      }
+        this.drawActive = true;
         if(this.deck.length > 0){
             this.returnCard = this.deck[0];
             this.deck.splice(0, 1); // draws from the beginning of the array and removes it afterwards
+            this.drawActive = false;
             return(this.returnCard);
         }
         else{
+            this.drawActive = false;
             return(null);
         }
     }
