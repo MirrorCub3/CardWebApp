@@ -4,7 +4,24 @@ body{
     font-style: oblique;
     font-variant: small-caps;
 }
-
+input[type="button"],input[type="reset"],input[type="submit"]{
+    background-color: #131313;
+    color:#ffffff;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: oblique;
+    font-variant: small-caps;
+    border: 2px outset red;
+    font-size: 1em;
+}
+input[type="button" disabled]{
+    background-color: #999999;
+    color:#000000;
+    font-family: 'Courier New', Courier, monospace;
+    font-style: oblique;
+    font-variant: small-caps;
+    border: 2px outset red;
+    font-size: 1em;
+}
 header {
     background-color:#000000;
     color:whitesmoke;

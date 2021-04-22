@@ -33,7 +33,9 @@ Changes 4/15
 - added the show hand which updates to the most current hand
 	- showId is the first index to be added to the shown hand array;
 - added routes.js to handle requests
-
+4/21-------------------------------------------------------------
+- infinite mode is working- cards in discard will replace to main constantly as long as discard isnt empty
+- shuffle on replace is also working - cards from discard will be shuffled into the main pile
 Need:
 - a draw card button, table button, and discard along with all their functions
 	- store player hand in an array within an array - accessable to players via their id
