@@ -320,7 +320,6 @@ window.addEventListener('load', eventWindowLoaded, false);
 function eventWindowLoaded() {
    canvasApp();
 
-
 }
 
 function Create2DArray(rows) {
@@ -400,7 +399,6 @@ theCanvas.style.top = "20px"
    }
    function onMouseClick(e)
    {
-
 
 
 
@@ -620,3 +618,4 @@ context.restore();
    }
 ////////////////////////////////////////////////////////
 }
+
