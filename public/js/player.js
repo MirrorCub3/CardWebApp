@@ -307,6 +307,9 @@ function playerCheck() {
     let tempCard20 = new Image()
   tempCard20.src  =  "/views/clear.png"
 
+  let greenTable = new Image()
+  greenTable.src = "/views/greenTable.jpg"
+
 //setting window width and height
  window.innerWidth = 1920
   window.innerHeight = 1015
@@ -316,39 +319,7 @@ function playerCheck() {
 window.addEventListener('load', eventWindowLoaded, false);
 function eventWindowLoaded() {
    canvasApp();
-   //change card holder to acutal card
-   //players hand cards
-        // if(shownHand[0]!=null)
-        //     tempCard1.src = shownHand[0].image.replace('90x90', '225x225');
-        // if(shownHand[1]!=null)
-        //     tempCard2.src = shownHand[1].image.replace('90x90', '225x225');
-        // if(shownHand[2]!=null)
-        //     tempCard3.src = shownHand[2].image.replace('90x90', '225x225')
-        // if(shownHand[3]!=null)
-        //     tempCard4.src = shownHand[3].image.replace('90x90', '225x225');
-        // if(shownHand[4]!=null)
-        //     tempCard6.src = shownHand[4].image.replace('90x90', '225x225')
-        // if(shownHand[5]!=null)
-        //     tempCard7.src = shownHand[5].image.replace('90x90', '225x225');
-        // if(shownHand[6]!=null)
-        //     tempCard8.src = shownHand[6].image.replace('90x90', '225x225');
-
-//table cards (other players)
-//         tempCard9.src = jackHearts.replace('90x90', '225x225');
-//         tempCard10.src = jackSpades.replace('90x90', '225x225');
-//         tempCard11.src = jackDiamonds.replace('90x90', '225x225')
-//         tempCard12.src = jackClovers.replace('90x90', '225x225')
-//         tempCard13.src = aceHearts.replace('90x90', '225x225');
-//         tempCard14.src = aceSpades.replace('90x90', '225x225')
-//         tempCard15.src = aceDiamonds.replace('90x90', '225x225');
-//         tempCard16.src = aceClovers.replace('90x90', '225x225');
-//         tempCard17.src = twoHearts.replace('90x90', '225x225');
-//
-// //table for player (not other players)
-//         tempCard18.src = twoClover.replace('90x90', '225x225');
-//         tempCard19.src = twoDiamonds.replace('90x90', '225x225');
-//         tempCard20.src = twoSpades.replace('90x90', '225x225');
-
+  
 
 }
 
@@ -464,8 +435,9 @@ theCanvas.style.top = "20px"
  {
 
  // draw table background
- context.fillStyle = '#186110';
- context.fillRect(0,0,theCanvas.width,260);
+ //context.fillStyle = '#186110';
+ //context.fillRect(0,0,theCanvas.width,260);
+ context.drawImage(greenTable,0,0,theCanvas.width,260);
  context.strokeStyle = '#000000';
  context.strokeRect(0,0,theCanvas.width,260);
  //player and other players card placements (table)
@@ -475,24 +447,25 @@ theCanvas.style.top = "20px"
 
 
  // draw players cards background
- context.fillStyle = '#305fb0';
- context.fillRect(0,505,theCanvas.width,220);
+
+  context.lineWidth = 8
+  context.strokeStyle = '#cc0000'
+  context.strokeRect(0,500,theCanvas.width,215);
+
 
 //players table placements
- context.fillStyle = '#ff0000';
- context.fillRect(0,275,theCanvas.width,220);
+// context.fillStyle = '#ff0000';
+// context.fillRect(0,275,theCanvas.width,220);
+ context.drawImage(greenTable,350,275,theCanvas.width/2+100,220);
 
  //outline tables
  context.strokeStyle = '#000000';
- context.strokeRect(0,505,theCanvas.width,220);
 
  context.strokeRect(0,275,theCanvas.width,220);
 
-
-
  {
 // player name display
- context.fillStyle = '#000000';
+ context.fillStyle = '#ffffff';
  context.font = '30px sans-serif';
  context.textBaseline = 'top';
  if(others.length>0)
@@ -501,10 +474,9 @@ theCanvas.style.top = "20px"
  context.fillText (others[1].name, theCanvas.width/3+20, 10);
  if(others.length>2)
  context.fillText (others[2].name, theCanvas.width/3*2+30, 10);
- context.fillText ($("#nameset").val(), 10, 280);
+ context.fillText ($("#nameset").val(), 355, 285);
 
  }
-
 
 
 
@@ -548,6 +520,10 @@ theCanvas.style.top = "20px"
  context.drawImage(tempCard19,720,285, 150, 200)
  context.drawImage(tempCard20,895,285, 150, 200)
 
+
+
+
+
  context.restore();
 
  }
@@ -557,8 +533,8 @@ function drawSquare(xpos,ypos,rot,xscale,yscale){
 context.translate(xpos, ypos);
 context.rotate(rot);
 context.beginPath();
-      context.fillStyle = 'rgb(204,0,0,0.5)'
-      context.strokeStyle = '#000000';
+      context.strokeStyle = 'rgb(204,0,0,0.5)'
+     // context.strokeStyle = '#000000';
     context.rect(0,0,45,45);
     context.fill();
 context.stroke();
@@ -644,3 +620,4 @@ context.restore();
    }
 ////////////////////////////////////////////////////////
 }
+
