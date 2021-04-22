@@ -43,6 +43,33 @@ function DrawCard(){
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+function drawDiscard(){
+    $.get("/drawdiscard", {num:1,id:realId},function(data){
+        if(!data)
+          return;
+        myHand = data.cards;
+
+        let x = showId;
+        shownHand.length = 0;
+        while(shownHand.length < 7){
+            if(x < 0){
+                shownHand[shownHand.length] = null;
+                x++;
+            }
+            else{
+                if(x < myHand.length){
+                    shownHand[shownHand.length] = myHand[x];
+                    x++;
+                }
+                else{
+                    shownHand[shownHand.length] = null;
+                }
+            }
+        }
+        //console.log(shownHand);
+    });
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function ToTable(){
     if(myHand.length ==0)
         return;

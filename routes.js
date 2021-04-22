@@ -139,6 +139,25 @@ router.get("/drawcard",function(req,res) {
     res.json({cards:playerList[req.query.id].hand});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.get("/drawdiscard",function(req,res) {
+    if(myDeck.discard.length == 0){
+        res.json(null);
+        return;
+    }
+    let cards = [];
+    for(let x = 0; x < req.query.num;x++){
+        cards[cards.length] = myDeck.DrawDiscard();
+    }
+    for(let card in cards){
+        if(cards[card] == null){
+            cards.splice(card, 1); // removing null cards
+        }
+        let myHand = playerList[req.query.id];
+        myHand.hand[myHand.hand.length] = cards[card];
+    }
+    res.json({cards:playerList[req.query.id].hand});
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post("/create",function(req,res) {
     if(req.body.playernum * req.body.handnum > myDeck.deck.length){
         res.json({error:1});
