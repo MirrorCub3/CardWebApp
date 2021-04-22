@@ -274,6 +274,23 @@ router.post("/discard",function(req,res) {
     res.json({hand:playerList[id].hand});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.post("/cleartable",function(req,res) {
+    if(!req.body.table)
+        return
+    let id = parseInt(req.body.id);
+    let table = req.body.table;
+    for(let card in table){
+        if(table[card] !=null){
+            myDeck.Discard(table[card]);
+            let index = myDeck.FindIndex(table[card],playerList[id].tableHand);
+            if(index != -1){
+                playerList[id].tableHand.splice(index, 1);
+            }
+        }
+    }
+    res.json({tablehand:playerList[id].tableHand});
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function validString(string) {
     let regex =  /^[A-Za-z0-9 ]*[A-Za-z0-9 ]*$/;
     let  validString = regex.test(string);

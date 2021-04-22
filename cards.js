@@ -151,7 +151,7 @@ module.exports = class Deck {
         this.drawDiscardActive = true;
         if(this.discard.length > 0){
             this.returnCard = this.discard[this.discard.length-1];
-            this.discard.splice(discard.length-1, 1);
+            this.discard.splice(this.discard.length-1, 1);
             this.drawDiscardActive = false;
             return(this.returnCard);
         }

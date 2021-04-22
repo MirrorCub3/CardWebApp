@@ -110,6 +110,15 @@ function ToTable(){
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+function clearTable(){
+    if(tableHand.length == 0)
+        return;
+    $.post("/cleartable", {id:realId,table:tableHand},function(){
+        tableHand.length = 0;
+        tableHand = data.tablehand;
+    });
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function shiftLeft(){
     showId--;
     if(showId <= -3){
