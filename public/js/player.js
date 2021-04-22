@@ -449,6 +449,8 @@ theCanvas.style.top = "20px"
   context.lineWidth = 8
   context.strokeStyle = '#cc0000'
   context.strokeRect(0,500,theCanvas.width,215);
+     context.fillStyle = '#000000';
+ context.fillRect(0,505,theCanvas.width,220);
 
 
 //players table placements
