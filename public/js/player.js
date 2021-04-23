@@ -305,12 +305,12 @@ function playerCheck() {
         if(data.empty == true){
           $("#main").val("Main Empty");
           $('#main').attr("disabled", true);
-          $('#main').attr( 'title',"There are 0 cards in the Main Deck");
+          $('#main').attr( 'title',"There Are 0 Cards In The Main Deck");
         }
         else if(data.empty == false){
           $("#main").val("Draw Card");
           $('#main').removeAttr("disabled");
-          $('#main').attr( 'title',"Draw one card");
+          $('#main').attr( 'title',"Draw One Card");
         }
 
         if(data.infinite){
