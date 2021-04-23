@@ -1,5 +1,5 @@
 module.exports = class Deck {
-    constructor() {
+    constructor(jokerCheck) {
         this.deck = [];
         this.deck.length = 0;
         this.discard = [];
@@ -7,75 +7,76 @@ module.exports = class Deck {
         this.imageId = 0;
         this.shuffleOnReplace = false;
         this.drawActive = false;
+        this.joker = jokerCheck;
         this.drawDiscardActive = false;
         const suites = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
         const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
         const images = [
          /// aces
-          "/views/aceHearts.png", //aceHearts
-          "/views/aceSpades.png", //aceSpades
-          "/views/aceClubs.png", //aceClubs
-          "/views/aceDiamonds.jpeg", //aceDiamonds
+          "/views/PNG/AH.png", //aceHearts
+          "/views/PNG/AS.png", //aceSpades
+          "/views/PNG/AC.png", //aceClubs
+          "/views/PNG/AD.png", //aceDiamonds
           ///2s
-          "/views/twoHearts.webp", //twoHearts
-          "/views/twoSpades.png", //twoSpades
-          "/views/twoClubs.jpeg", //twoclub
-          "/views/twoDiamonds.png", //twoDiamonds
+          "/views/PNG/2H.png", //twoHearts
+          "/views/PNG/2S.png", //twoSpades
+          "/views/PNG/2C.png", //twoclub
+          "/views/PNG/2D.png", //twoDiamonds
           ///3s
-          "/views/threeHearts.jpg",
-          "/views/threeSpades.png",
-          "/views/threeClubs.png",
-          "/views/threeDiamonds.png",
+          "/views/PNG/3H.png",
+          "/views/PNG/3S.png",
+          "/views/PNG/3C.png",
+          "/views/PNG/3D.png",
           //4s
-          "/views/fourHearts.png",
-          "/views/fourSpades.png",
-          "/views/fourClubs.png",
-          "/views/fourDiamonds.jpeg",
+          "/views/PNG/4H.png",
+          "/views/PNG/4S.png",
+          "/views/PNG/4C.png",
+          "/views/PNG/4D.png",
           ///5s
-          "/views/fiveHearts.png ",
-          "/views/fiveSpades.png",
-          "/views/fiveClubs.jpg",
-          "/views/fiveDiamonds.png",
+          "/views/PNG/5H.png",
+          "/views/PNG/5S.png",
+          "/views/PNG/5C.png",
+          "/views/PNG/5D.png",
           //6s
-          "/views/sixHearts.jpeg",
-          "/views/sixSpades.jpeg",
-          "/views/sixClubs.png",
-          "/views/sixDiamonds.png",
+          "/views/PNG/6H.png",
+          "/views/PNG/6S.png",
+          "/views/PNG/6C.png",
+          "/views/PNG/6D.png",
           //7s
-          "/views/sevenHearts.png",
-          "/views/sevenSpades.png",
-          "/views/sevenClubs.jpeg",
-          "/views/sevenDiamonds.png",
+          "/views/PNG/7H.png",
+          "/views/PNG/7S.png",
+          "/views/PNG/7C.png",
+          "/views/PNG/7D.png",
           //8s
-          "/views/eightHearts.png",
-          "/views/eightSpades.jpeg",
-          "/views/eightClubs.gif",
-          "/views/eightDiamonds.png",
+          "/views/PNG/8H.png",
+          "/views/PNG/8S.png",
+          "/views/PNG/8C.png",
+          "/views/PNG/8D.png",
           //9s
-          "/views/nineHearts.png",
-          "/views/nineSpades.png",
-          "/views/nineClubs.png",
-          "/views/nineDiamonds.png",
+          "/views/PNG/9H.png",
+          "/views/PNG/9S.png",
+          "/views/PNG/9C.png",
+          "/views/PNG/9D.png",
           //10
-          "/views/tenHearts.png",
-          "/views/tenSpades.png",
-          "/views/tenClubs.jpg",
-          "/views/tenDiamonds.png",
+          "/views/PNG/10H.png",
+          "/views/PNG/10S.png",
+          "/views/PNG/10C.png",
+          "/views/PNG/10D.png",
           //jack
-          "/views/jackHearts.png",
-          "/views/jackSpades.png",
-          "/views/jackClubs.png",
-          "/views/jackDiamonds.png",
+          "/views/PNG/JH.png",
+          "/views/PNG/JS.png",
+          "/views/PNG/JC.png",
+          "/views/PNG/JD.png",
           //queen
-          "/views/queenHearts.png",
-          "/views/queenSpades.png",
-          "/views/queenClubs.jpeg",
-          "/views/queenDiamonds.jpg",
+          "/views/PNG/QH.png",
+          "/views/PNG/QS.png",
+          "/views/PNG/QC.png",
+          "/views/PNG/QD.png",
           //king
-          "/views/kingHearts.jpg",
-          "/views/kingSpades.png",
-          "/views/kingClubs.jpg",
-          "/views/kingDiamonds.jpeg"
+          "/views/PNG/KH.png",
+          "/views/PNG/KS.png",
+          "/views/PNG/KC.png",
+          "/views/PNG/KD.png"
         ];
         for (let value in values) {
             for (let suite in suites) {
@@ -83,8 +84,14 @@ module.exports = class Deck {
                 this.imageId++;
             }
         }
+        if(this.joker == true){
+            this.deck.push(new Card("Joker","Joker","/views/joker.jpg"));
+            this.deck.push(new Card("Joker","Joker","/views/joker.jpg"));
+        }
     }
     shuffle(){
+        if(this.deck.length == 0)
+            return;
         this.preShuffle = this.deck;
         this.shuffled = [];
         this.shuffled.length = this.preShuffle.length;

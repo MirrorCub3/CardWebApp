@@ -2,9 +2,11 @@ const Deck = require("./cards.js");
 const Player = require("./playerObject.js");
 var express = require("express");
 var router = express.Router();
-
-let myDeck = new Deck();
  // settings variables
+const defaultName = "Virtual Cards";
+const classicDeck = 52;
+const jokerDeck = 54;
+
 let playerCount = 0;
 let playerSetNum = 1; // set this to the player num when game is created
 let playerList = []; // Player object array
@@ -12,10 +14,12 @@ let numActive = 0;
 let handNum = 0;
 let openIndex = 0;
 let infinite = false;
-const defaultName = "Virtual Cards";
+let joker = false;
 let gameName = "Virtual Cards";
-//let deckSize = 52;
+let deckSize = classicDeck;
 let gameActive = false;
+
+let myDeck = new Deck(joker);
 let chat = []; // string array
 
 router.get("/",function(req,res) {
@@ -23,7 +27,7 @@ router.get("/",function(req,res) {
 });
 router.get("/start",function(req,res) { // loads saved data into the page
     res.json({gamename:gameName,handnum:handNum,playernum:playerSetNum,infinite:infinite,
-            shuffleon:myDeck.shuffleOnReplace});
+            shuffleon:myDeck.shuffleOnReplace, joker:joker});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/player",function(req,res) {
@@ -65,9 +69,17 @@ router.get("/indexCheck",function(req,res) {
         numActive = parseInt(numTrue);
     }
     //////////////////////////////////////////////////
+    if(req.query.joker == "true"){
+      deckSize = jokerDeck;
+    }
+    else{
+      deckSize = classicDeck;
+    }
+    //console.log(deckSize);
     let maxHand = 1;
-    maxHand = parseInt(myDeck.deck.length/req.query.playernum);
-    res.json({active:numActive,maxhand:maxHand, gameactive:gameActive});
+    maxHand = parseInt(deckSize/req.query.playernum);
+    res.json({active:numActive,maxhand:maxHand, gameactive:gameActive, discard:myDeck.discard,
+              empty:myDeck.CheckEmpty()});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.get("/checkplayer", function(req,res){
@@ -96,7 +108,9 @@ router.get("/checkplayer", function(req,res){
             }
         }
         playerList[id].name = req.query.playername;
-        res.json({gamename:gameName,chat:chat,empty:myDeck.CheckEmpty(),gameactive:gameActive,others:otherPlayers,tablehand:playerList[id].tableHand,hand:playerList[id].hand});
+        res.json({gamename:gameName,chat:chat,empty:myDeck.CheckEmpty(),gameactive:gameActive,
+                others:otherPlayers,tablehand:playerList[id].tableHand,hand:playerList[id].hand,infinite:infinite,
+                discard:myDeck.discard});
     }
     //console.log(req.query.id + " " + playerList[req.query.id].active);
 });
@@ -106,7 +120,7 @@ router.get("/end", function(req,res){
       res.json({error:2});
       return;
     }
-    myDeck = new Deck();
+    myDeck = new Deck(joker);
     gameActive = false;
     numActive = 0;
     chat.length = 0;
@@ -159,7 +173,7 @@ router.get("/drawdiscard",function(req,res) {
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post("/create",function(req,res) {
-    if(req.body.playernum * req.body.handnum > myDeck.deck.length){
+    if(req.body.playernum * req.body.handnum > deckSize){
         res.json({error:1});
         return;
     }
@@ -172,7 +186,15 @@ router.post("/create",function(req,res) {
       return;
     }
     //////////////////////////////////////
-    myDeck = new Deck();
+    if(req.body.joker == "true"){
+        joker = true;
+        deckSize = jokerDeck;
+    }
+    else{
+        joker = false;
+        deckSize = classicDeck;
+    }
+    myDeck = new Deck(joker);
     myDeck.shuffle();
     if(req.body.infinite == "true")
         infinite = true;
@@ -243,6 +265,16 @@ router.post("/chat",function(req,res) {
     res.json({chat:chat});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.post("/discardtomain",function(req,res) {
+    myDeck.DiscardToMain();
+    res.json(null);
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.post("/shuffle",function(req,res) {
+    myDeck.shuffle();
+    res.json(null);
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post("/totable",function(req,res) {
     if(!req.body.card)
         return
@@ -257,6 +289,19 @@ router.post("/totable",function(req,res) {
             myDeck.Discard(playerList[id].tableHand[0]);
             playerList[id].tableHand.splice(0, 1);
         }
+    }
+    res.json({hand:playerList[id].hand, tablehand:playerList[id].tableHand});
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.post("/pulltable",function(req,res) {
+    if(!req.body.card)
+        return
+    let id = parseInt(req.body.id);
+    let card = req.body.card;
+    let index = myDeck.FindIndex(card,playerList[id].tableHand);
+    if(index != -1){
+        playerList[id].tableHand.splice(index, 1);
+        playerList[id].hand[playerList[id].hand.length] = card;
     }
     res.json({hand:playerList[id].hand, tablehand:playerList[id].tableHand});
 });

@@ -8,11 +8,20 @@ let shownHand = [];
 let showId = -3;
 let tableHand = [];
 function SendMessage(){
+    if(/^[ ]*[ ]*$/.test(document.getElementById("sendMessage").value) == true){ // checks if the text imput is empty
+        return;
+    }
     let chat = (document.getElementById("nameset").value + ": " + document.getElementById("sendMessage").value );
     $.post("/chat", {line:chat},function(data){
       document.getElementById("sendMessage").value = "";
     });
 }
+$("#sendMessage").keypress(function(event) { // allows enter key to send message
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("sendButton").click();
+  }
+});
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function DrawCard(){
     $.get("/drawcard", {num:1,id:realId},function(data){
@@ -48,7 +57,6 @@ function drawDiscard(){
         if(!data)
           return;
         myHand = data.cards;
-
         let x = showId;
         shownHand.length = 0;
         while(shownHand.length < 7){
@@ -110,10 +118,44 @@ function ToTable(){
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+function PullTable(){
+    if(tableHand.length ==0)
+        return;
+    let card = null;
+    card = tableHand[tableHand.length - 1];
+    if(tableHand[tableHand.length - 1] == null)
+        return;
+    $.post("/pulltable", {id:realId,card:card},function(data){
+        if(!data)
+          return;
+        myHand = data.hand;
+        tableHand.length = 0;
+        tableHand = data.tablehand;
+
+        let x = showId;
+        shownHand.length = 0;
+        while(shownHand.length < 7){
+            if(x < 0){
+                shownHand[shownHand.length] = null;
+                x++;
+            }
+            else{
+                if(x < myHand.length){
+                    shownHand[shownHand.length] = myHand[x];
+                    x++;
+                }
+                else{
+                    shownHand[shownHand.length] = null;
+                }
+            }
+        }
+    });
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 function clearTable(){
     if(tableHand.length == 0)
         return;
-    $.post("/cleartable", {id:realId,table:tableHand},function(){
+    $.post("/cleartable", {id:realId,table:tableHand},function(data){
         tableHand.length = 0;
         tableHand = data.tablehand;
     });
@@ -206,7 +248,7 @@ function Discard(){
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-function sucessInfo(data){
+function successinfo(data){
     if(!data)
         return;
     id = parseInt(data.id);
@@ -239,8 +281,8 @@ function sucessInfo(data){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function(){
     //console.log("player ready");
-    //$.get("/player2", {index:1,id:id},sucessInfo);
-    $.get("/player2",sucessInfo);
+    //$.get("/player2", {index:1,id:id},successinfo);
+    $.get("/player2",successinfo);
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('beforeunload',function () {
@@ -259,8 +301,9 @@ function playerCheck() {
         for(let i = 0; i < data.chat.length;i++){
             document.getElementById("chatbox").innerHTML +=  data.chat[i] + "\n";
         }
+        document.getElementById("chatbox").scrollTop = document.getElementById("chatbox").scrollHeight; // auto scrolls to the bottom of chat
         if(data.empty == true){
-          $("#main").val("  Empty  ");
+          $("#main").val("Main Empty");
           $('#main').attr("disabled", true);
           $('#main').attr( 'title',"There are 0 cards in the Main Deck");
         }
@@ -268,6 +311,22 @@ function playerCheck() {
           $("#main").val("Draw Card");
           $('#main').removeAttr("disabled");
           $('#main').attr( 'title',"Draw one card");
+        }
+
+        if(data.infinite){
+          $('#drawDiscard').attr("disabled", true);
+          $('#drawDiscard').attr( 'title',"Cannot Draw Fom Discard In Infinite Mode");
+        }
+        else{
+          $('#drawDiscard').attr( 'title',"Draw One Card From Top of Discard");
+          if(parseInt(data.discard.length) > 0){
+            $("#drawDiscard").removeAttr("disabled");
+            $("#drawDiscard").val("Draw Discard");
+          }
+          else{
+            $("#drawDiscard").attr("disabled", true);
+            $("#drawDiscard").val("Discard Empty");
+          }
         }
     });
     let numMilliSeconds = 500;
@@ -495,14 +554,14 @@ theCanvas.style.top = "20px"
  context.drawImage(greenTable,350,275,theCanvas.width/2+100,220);
 
  //outline tables
- context.strokeStyle = '#000000';
-
- context.strokeRect(0,275,theCanvas.width,220);
+ // context.strokeStyle = '#000000';
+ //
+ // context.strokeRect(0,275,theCanvas.width,220);
 
  {
 // player name display
  context.fillStyle = '#ffffff';
- context.font = '30px sans-serif';
+ context.font = '30px Courier New';
  context.textBaseline = 'top';
  if(others.length>0)
  context.fillText (others[0].name, 10, 10);

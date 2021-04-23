@@ -1,11 +1,11 @@
 body{
-    background: url(back.jpg);
+    background: url(back.png);
     font-family: 'Courier New', Courier, monospace;
     font-style: oblique;
     font-variant: small-caps;
 }
 input[type="button"],input[type="reset"],input[type="submit"]{
-    background-color: #131313;
+    background-color: #000000;
     color:#ffffff;
     font-family: 'Courier New', Courier, monospace;
     font-style: oblique;
@@ -13,14 +13,14 @@ input[type="button"],input[type="reset"],input[type="submit"]{
     border: 2px outset red;
     font-size: 1em;
 }
-input[type="button" disabled]{
-    background-color: #999999;
-    color:#000000;
-    font-family: 'Courier New', Courier, monospace;
-    font-style: oblique;
-    font-variant: small-caps;
-    border: 2px outset red;
-    font-size: 1em;
+input[type="button"]:disabled{
+  background-color: #999999;
+  color:#000000;
+  font-family: 'Courier New', Courier, monospace;
+  font-style: oblique;
+  font-variant: small-caps;
+  border: 2px outset red;
+  font-size: 1em;
 }
 header {
     background-color:#000000;
@@ -48,4 +48,19 @@ section{
     padding-block-end: 0.625em;
     width: 500px;
 
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #999;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

@@ -1,5 +1,5 @@
 body{
-    background: url(back.jpg);
+    background: url(back.png);
     font-family: 'Courier New', Courier, monospace;
     font-style: italic;
     font-variant: small-caps;
@@ -75,6 +75,22 @@ textarea{
     border:#cc0000 5px outset;
     background-color:#000000;
     margin-inline-end: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #999;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 section#carrddeck{
