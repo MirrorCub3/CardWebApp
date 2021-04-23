@@ -139,6 +139,25 @@ router.get("/drawcard",function(req,res) {
     res.json({cards:playerList[req.query.id].hand});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.get("/drawdiscard",function(req,res) {
+    if(myDeck.discard.length == 0){
+        res.json(null);
+        return;
+    }
+    let cards = [];
+    for(let x = 0; x < req.query.num;x++){
+        cards[cards.length] = myDeck.DrawDiscard();
+    }
+    for(let card in cards){
+        if(cards[card] == null){
+            cards.splice(card, 1); // removing null cards
+        }
+        let myHand = playerList[req.query.id];
+        myHand.hand[myHand.hand.length] = cards[card];
+    }
+    res.json({cards:playerList[req.query.id].hand});
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post("/create",function(req,res) {
     if(req.body.playernum * req.body.handnum > myDeck.deck.length){
         res.json({error:1});
@@ -253,6 +272,23 @@ router.post("/discard",function(req,res) {
         playerList[id].hand.splice(index, 1);
     }
     res.json({hand:playerList[id].hand});
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.post("/cleartable",function(req,res) {
+    if(!req.body.table)
+        return
+    let id = parseInt(req.body.id);
+    let table = req.body.table;
+    for(let card in table){
+        if(table[card] !=null){
+            myDeck.Discard(table[card]);
+            let index = myDeck.FindIndex(table[card],playerList[id].tableHand);
+            if(index != -1){
+                playerList[id].tableHand.splice(index, 1);
+            }
+        }
+    }
+    res.json({tablehand:playerList[id].tableHand});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function validString(string) {

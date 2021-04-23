@@ -26,15 +26,20 @@
           <input id="sendMessage" type="text">
           <input id="sendButton" type= "submit" value="Send" onClick = "SendMessage()">
           <hr>
+          <div id="tableButtons" style = "align-items: center;">
+            <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table - Cards over 3 will be discarded" onClick = "ToTable()" >
+            <input id="clearTable" type= "button" value="Clear The Table" title= "Discard All Cards On Your Table" onClick = "clearTable()" >
+          </div>
+          <hr>
           <div id = "pileButtons">
-              <input id="toTable" type= "button" value="Send To Table" title= "Send Card to the Table - Cards over 3 will be discarded" onClick = "ToTable()" >
               <input id="main" type= "button" value="Draw Card" title= "Draw one card" onClick = "DrawCard()">
               <input id="discard" type= "button" value="Discard" title= "Discard Currently Selected Card" onClick = "Discard()">
+              <input id="drawDiscard" type= "button" value="Draw Discard" title= "Draw One Card From Top of Discard" onClick = "drawDiscard()">
           </div>
           <hr>
           <div id = "shiftButtons">
             <input id="shiftLeft" type= "button" value=" < Shift Left" title= "Shift Hand to the Left" onClick = "shiftLeft()" >
-            <input id="shiftRight" type= "button" value="Shift Right > " title= "Shift Hand to the Right" onClick = "shiftRight()" >
+            <input id="shiftRight" type= "button" value=" Shift Right > " title= "Shift Hand to the Right" onClick = "shiftRight()" >
           </div>
       </div>
     </section>

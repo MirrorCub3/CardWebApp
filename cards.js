@@ -7,6 +7,7 @@ module.exports = class Deck {
         this.imageId = 0;
         this.shuffleOnReplace = false;
         this.drawActive = false;
+        this.drawDiscardActive = false;
         const suites = ['Hearts', 'Spades', 'Clubs', 'Diamonds'];
         const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
         const images = [
@@ -140,6 +141,22 @@ module.exports = class Deck {
         }
         else{
             this.drawActive = false;
+            return(null);
+        }
+    }
+    DrawDiscard(){
+      if(this.drawDiscardActive == true){
+          return;
+      }
+        this.drawDiscardActive = true;
+        if(this.discard.length > 0){
+            this.returnCard = this.discard[this.discard.length-1];
+            this.discard.splice(this.discard.length-1, 1);
+            this.drawDiscardActive = false;
+            return(this.returnCard);
+        }
+        else{
+            this.drawDiscardActive = false;
             return(null);
         }
     }
