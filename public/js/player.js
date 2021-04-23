@@ -524,7 +524,7 @@ theCanvas.style.top = "20px"
        }
 }
 
-   function paint()
+     function paint()
  {
 
  // draw table background
@@ -552,11 +552,11 @@ theCanvas.style.top = "20px"
 // context.fillStyle = '#ff0000';
 // context.fillRect(0,275,theCanvas.width,220);
  context.drawImage(greenTable,350,275,theCanvas.width/2+100,220);
-
+context.lineWidth = 1
  //outline tables
- // context.strokeStyle = '#000000';
+ context.strokeStyle = '#000000';
  //
- // context.strokeRect(0,275,theCanvas.width,220);
+ context.strokeRect(355,280,theCanvas.width/2+90,210);
 
  {
 // player name display
@@ -569,7 +569,7 @@ theCanvas.style.top = "20px"
  context.fillText (others[1].name, theCanvas.width/3+20, 10);
  if(others.length>2)
  context.fillText (others[2].name, theCanvas.width/3*2+30, 10);
- context.fillText ($("#nameset").val(), 355, 285);
+ context.fillText ($("#nameset").val(), 360, 285);
 
  }
 
