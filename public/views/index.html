@@ -2,6 +2,7 @@
 <html>
     <head>
     <title>SETTINGS</title>
+    <link rel="icon" type="image/png" href="/views/PNG/AS.png">
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="altIndex.css">
     <style type="text/css">
@@ -100,7 +101,7 @@
                 }
                 if($("#GameButton").val() == "Create Game"){
                     $("#GameButton").val("End Game");
-                    $("#GameButton").attr( 'title',"End // TEMP: he Current Running Game");
+                    $("#GameButton").attr( 'title',"End The Current Running Game");
                     $("#GameButton").attr( 'onClick',"EndGame()");
                 }
                 else if($("#GameButton").val() == "End Game"){
@@ -139,6 +140,15 @@
                       $("#DiscardToMain").val("Discard Empty");
                     }
 
+                    if($("#Infinite").prop("checked")){
+                      $("#DiscardToMain").attr("disabled", true);
+                      $("#DiscardToMain").val("Discard To Main");
+                      $("#DiscardToMain").attr( 'title',"Cannot Send Discard To Main In Infinite Mode");
+                    }
+                    else{
+                      $("#DiscardToMain").attr( 'title',"Return Discards To Main");
+                    }
+
                     if(data.empty == true){
                       $("#Shuffle").val("Main Empty");
                       $("#Shuffle").attr("disabled", true);
@@ -160,6 +170,7 @@
                         $("#ShuffleOn").prop('checked', false);
                     }
                     $("#DiscardToMain").attr("disabled", true);
+                    $("#DiscardToMain").val("Discard To Main");
                     $("#Shuffle").attr("disabled", true);
 
                     document.getElementById("openGame").textContent = "";
