@@ -295,11 +295,6 @@ function playerCheck() {
         others = data.others;
         tableHand = data.tablehand;
         myHand = data.hand;
-        for(let card in myHand){
-            if(myHand[card] == null){
-                myHand.splice(card, 1);
-            }
-        }
         //if(data.gameActive == false){  window.location.reload(true);}
         document.getElementById("gameName").innerHTML = data.gamename;
         document.getElementById("chatbox").innerHTML = "";

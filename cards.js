@@ -118,9 +118,7 @@ module.exports = class Deck {
             for(let id2 = id1 + 1; id2 < this.discard.length; id2++){
                 if(this.discard[id1] != null && this.discard[id2] != null && this.discard[id1].value == this.discard[id2].value &&
                    this.discard[id1].suite == this.discard[id2].suite){
-                      console.log(this.discard[id1]);
                       this.discard[id1] = null;
-                      console.log(this.discard[id1]);
                 }
             }
         }

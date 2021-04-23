@@ -289,6 +289,11 @@ router.post("/totable",function(req,res) {
             myDeck.Discard(playerList[id].tableHand[0]);
             playerList[id].tableHand.splice(0, 1);
         }
+        for(let card in playerList[id].hand){
+            if(playerList[id].hand[card] == null){
+                myHand.splice(card, 1);
+            }
+        }
     }
     res.json({hand:playerList[id].hand, tablehand:playerList[id].tableHand});
 });
@@ -303,6 +308,11 @@ router.post("/pulltable",function(req,res) {
         playerList[id].tableHand.splice(index, 1);
         playerList[id].hand[playerList[id].hand.length] = card;
     }
+    for(let card in playerList[id].hand){
+        if(playerList[id].hand[card] == null){
+            myHand.splice(card, 1);
+        }
+    }
     res.json({hand:playerList[id].hand, tablehand:playerList[id].tableHand});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -315,6 +325,11 @@ router.post("/discard",function(req,res) {
     let index = myDeck.FindIndex(card,playerList[id].hand);
     if(index != -1){
         playerList[id].hand.splice(index, 1);
+        for(let card in playerList[id].hand){
+            if(playerList[id].hand[card] == null){
+                myHand.splice(card, 1);
+            }
+        }
     }
     res.json({hand:playerList[id].hand});
 });
