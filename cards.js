@@ -85,8 +85,8 @@ module.exports = class Deck {
             }
         }
         if(this.joker == true){
-            this.deck.push(new Card("Joker","Joker","/views/joker_black.png"));
-            this.deck.push(new Card("Joker","Joker","/views/joker_red.png"));
+            this.deck.push(new Card("Joker","JokerBlack","/views/joker_black.png"));
+            this.deck.push(new Card("Joker","JokerRed","/views/joker_red.png"));
         }
     }
     shuffle(){
